@@ -26,12 +26,12 @@ public class FileCleanUp {
 
     public void cleanOldResidence() {
 
-        Map<String, ClaimedResidence> resNameList = new HashMap<String, ClaimedResidence>(plugin.getResidenceManager().getResidences());
+        Map<String, ClaimedResidence> resNameList = new HashMap<>(plugin.getResidenceManager().getResidences());
         int i = 0;
 
         OfflinePlayer[] offplayer = Bukkit.getOfflinePlayers();
 
-        HashMap<UUID, OfflinePlayer> playerMapUUID = new HashMap<UUID, OfflinePlayer>();
+        HashMap<UUID, OfflinePlayer> playerMapUUID = new HashMap<>();
 
         boolean lp = plugin.getPermissionManager().getPermissionsPlugin() instanceof LuckPerms5Adapter;
 
@@ -87,7 +87,11 @@ public class FileCleanUp {
                     if (plugin.getTransactionManager().isForSale(res))
                         plugin.getTransactionManager().removeFromSale(res);
                 } else
-                    plugin.getResidenceManager().removeResidence(rPlayer, oneName.getValue(), true, plugin.getConfigManager().isAutoCleanUpRegenerate());
+                String resName = oneName.getValue().getName();
+                Bukkit.getConsoleSender().sendMessage(plugin.getPrefix() + " 自动清理 " + rPlayer.getName() + " 的领地 " + resName);
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "cmi mail send " + rPlayer.getName() + " 你因为长期不在线(超过" + interval + "天), 你的领地 " + resName + " 已被清理");
+
+                plugin.getResidenceManager().removeResidence(rPlayer, oneName.getValue(), true, plugin.getConfigManager().isAutoCleanUpRegenerate());
                 i++;
             }
         } catch (Throwable e) {

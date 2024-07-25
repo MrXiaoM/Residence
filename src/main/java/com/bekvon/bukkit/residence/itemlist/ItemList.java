@@ -23,7 +23,7 @@ public class ItemList {
     }
 
     protected ItemList() {
-	list = new ArrayList<Material>();
+	list = new ArrayList<>();
     }
 
     public static enum ListType {
@@ -145,7 +145,7 @@ public class ItemList {
     }
 
     public Material[] toArray() {
-	Material mats[] = new Material[list.size()];
+	Material[] mats = new Material[list.size()];
 	int i = 0;
 	for (Material mat : list) {
 	    mats[i] = mat;
@@ -155,11 +155,11 @@ public class ItemList {
     }
 
     public Map<String, Object> save() {
-	Map<String, Object> saveMap = new LinkedHashMap<String, Object>();
+	Map<String, Object> saveMap = new LinkedHashMap<>();
 	if (list.isEmpty())
 	    return saveMap;
 	saveMap.put("Type", type.toString());
-	List<String> saveList = new ArrayList<String>();
+	List<String> saveList = new ArrayList<>();
 	for (Material mat : list) {
 	    saveList.add(mat.toString());
 	}

@@ -29,8 +29,8 @@ public class ResidencePlayer {
     private OfflinePlayer ofPlayer = null;
     private UUID uuid = null;
 
-    private Set<ClaimedResidence> ResidenceList = new HashSet<ClaimedResidence>();
-    private Set<ClaimedResidence> trustedList = new HashSet<ClaimedResidence>();
+    private Set<ClaimedResidence> ResidenceList = new HashSet<>();
+    private Set<ClaimedResidence> trustedList = new HashSet<>();
     private ClaimedResidence mainResidence = null;
 
     private PlayerGroup groups = null;
@@ -368,7 +368,7 @@ public class ResidencePlayer {
     }
 
     public List<ClaimedResidence> getResList() {
-        return new ArrayList<ClaimedResidence>(ResidenceList);
+        return new ArrayList<>(ResidenceList);
     }
 
     @Deprecated

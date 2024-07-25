@@ -16,7 +16,7 @@ public class PlayerGroup {
 
     ResidencePlayer resPlayer;
     long lastCheck = 0L;
-    HashMap<String, PermissionGroup> groups = new HashMap<String, PermissionGroup>();
+    HashMap<String, PermissionGroup> groups = new HashMap<>();
 
     public PlayerGroup(ResidencePlayer resPlayer) {
 	this.resPlayer = resPlayer;
@@ -43,7 +43,7 @@ public class PlayerGroup {
 	    return;
 
 	this.lastCheck = System.currentTimeMillis();
-	List<PermissionGroup> posibleGroups = new ArrayList<PermissionGroup>();
+	List<PermissionGroup> posibleGroups = new ArrayList<>();
 	String group;
 	if (Residence.getInstance().getPermissionManager().getPlayersGroups().containsKey(resPlayer.getName().toLowerCase())) {
 	    group = Residence.getInstance().getPermissionManager().getPlayersGroups().get(resPlayer.getName().toLowerCase());

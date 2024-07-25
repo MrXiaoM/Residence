@@ -108,7 +108,7 @@ public class lease implements cmd {
                 if (res == null)
                     return false;
 
-                List<ClaimedResidence> list = new ArrayList<ClaimedResidence>();
+                List<ClaimedResidence> list = new ArrayList<>();
 
                 if (plugin.getLeaseManager().isLeased(res))
                     list.add(res);

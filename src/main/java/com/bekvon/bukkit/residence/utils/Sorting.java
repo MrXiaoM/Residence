@@ -17,7 +17,7 @@ public class Sorting {
     public Map<String, Integer> sortByValueASC(Map<String, Integer> unsortMap) {
 
 	// Convert Map to List
-	List<Map.Entry<String, Integer>> list = new LinkedList<Map.Entry<String, Integer>>(unsortMap.entrySet());
+	List<Map.Entry<String, Integer>> list = new LinkedList<>(unsortMap.entrySet());
 
 	// Sort list with comparator, to compare the Map values
 	Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
@@ -39,7 +39,7 @@ public class Sorting {
     public Map<String, Integer> sortByValueDESC(Map<String, Integer> unsortMap) {
 
 	// Convert Map to List
-	List<Map.Entry<String, Integer>> list = new LinkedList<Map.Entry<String, Integer>>(unsortMap.entrySet());
+	List<Map.Entry<String, Integer>> list = new LinkedList<>(unsortMap.entrySet());
 
 	// Sort list with comparator, to compare the Map values
 	Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
@@ -61,7 +61,7 @@ public class Sorting {
     public Map<String, Integer> sortByKeyDESC(Map<String, Integer> unsortMap) {
 
 	// Convert Map to List
-	List<Map.Entry<String, Integer>> list = new LinkedList<Map.Entry<String, Integer>>(unsortMap.entrySet());
+	List<Map.Entry<String, Integer>> list = new LinkedList<>(unsortMap.entrySet());
 
 	// Sort list with comparator, to compare the Map values
 	Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
@@ -81,7 +81,7 @@ public class Sorting {
     }
 
     public List<ClaimedResidence> sortResidences(List<ClaimedResidence> residences) {
-	Map<String, Object> map = new HashMap<String, Object>();
+	Map<String, Object> map = new HashMap<>();
 	for (ClaimedResidence one : residences) {
 	    if (one == null)
 		continue;
@@ -100,7 +100,7 @@ public class Sorting {
     public Map<String, Object> sortByKeyASC(Map<String, Object> unsortMap) {
 
 	// Convert Map to List
-	List<Map.Entry<String, Object>> list = new LinkedList<Map.Entry<String, Object>>(unsortMap.entrySet());
+	List<Map.Entry<String, Object>> list = new LinkedList<>(unsortMap.entrySet());
 
 	// Sort list with comparator, to compare the Map values
 	Collections.sort(list, new Comparator<Map.Entry<String, Object>>() {
@@ -122,7 +122,7 @@ public class Sorting {
     public Map<String, String> sortStringByKeyASC(Map<String, String> unsortMap) {
 
 	// Convert Map to List
-	List<Map.Entry<String, String>> list = new LinkedList<Map.Entry<String, String>>(unsortMap.entrySet());
+	List<Map.Entry<String, String>> list = new LinkedList<>(unsortMap.entrySet());
 
 	// Sort list with comparator, to compare the Map values
 	Collections.sort(list, new Comparator<Map.Entry<String, String>>() {
@@ -144,7 +144,7 @@ public class Sorting {
     public Map<String, Double> sortDoubleDESC(Map<String, Double> unsortMap) {
 
 	// Convert Map to List
-	List<Map.Entry<String, Double>> list = new LinkedList<Map.Entry<String, Double>>(unsortMap.entrySet());
+	List<Map.Entry<String, Double>> list = new LinkedList<>(unsortMap.entrySet());
 
 	// Sort list with comparator, to compare the Map values
 	Collections.sort(list, new Comparator<Map.Entry<String, Double>>() {
@@ -166,7 +166,7 @@ public class Sorting {
     public Map<String, Integer> sortASC(Map<String, Integer> unsortMap) {
 
 	// Convert Map to List
-	List<Map.Entry<String, Integer>> list = new LinkedList<Map.Entry<String, Integer>>(unsortMap.entrySet());
+	List<Map.Entry<String, Integer>> list = new LinkedList<>(unsortMap.entrySet());
 
 	// Sort list with comparator, to compare the Map values
 	Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {

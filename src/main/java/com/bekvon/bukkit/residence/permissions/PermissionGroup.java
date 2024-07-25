@@ -79,10 +79,10 @@ public class PermissionGroup {
 
     public PermissionGroup(String name) {
         flagPerms = new FlagPermissions();
-        creatorDefaultFlags = new HashMap<String, Boolean>();
+        creatorDefaultFlags = new HashMap<>();
 //	rentedDefaultFlags = new HashMap<String, Boolean>();
-        residenceDefaultFlags = new HashMap<String, Boolean>();
-        groupDefaultFlags = new HashMap<String, Map<String, Boolean>>();
+        residenceDefaultFlags = new HashMap<>();
+        groupDefaultFlags = new HashMap<>();
         
         worldperms = new HashMap<>();
         groupperms = new HashMap<>();

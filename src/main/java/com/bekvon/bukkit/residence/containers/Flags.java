@@ -6,6 +6,7 @@ import java.util.Set;
 import net.Zrips.CMILib.Items.CMIMaterial;
 
 public enum Flags {
+    action(CMIMaterial.BEDROCK, FlagMode.Both, "Allows or denys /sit or /crawl command", true),
     anvil(CMIMaterial.ANVIL, FlagMode.Both, "Allows or denys interaction with anvil", true),
     admin(CMIMaterial.BEDROCK, FlagMode.Player, "Gives a player permission to change flags on a residence", true),
     animalkilling(CMIMaterial.CHICKEN, FlagMode.Both, "Allows or denys animal killing", false),
@@ -13,6 +14,7 @@ public enum Flags {
     anchor(CMIMaterial.RESPAWN_ANCHOR, FlagMode.Both, "Allows or denys respawn anchor usage", true),
     anvilbreak(CMIMaterial.ANVIL, FlagMode.Residence, "Allows or denys anvil break in residence", true),
     safezone(CMIMaterial.APPLE, FlagMode.Residence, "Setting to true makes the residence clean bad effects from its occupants", false),
+    back(CMIMaterial.ENDER_PEARL, FlagMode.Both, "Allows or denys /back and /dback command", true),
     backup(CMIMaterial.BOOKSHELF, FlagMode.Residence, "If set to true, restores previous look of area (WordEdit required)", false),
     bank(CMIMaterial.ENDER_CHEST, FlagMode.Both, "Allows or denys deposit/withdraw money from res bank", true),
     bed(CMIMaterial.WHITE_BED, FlagMode.Both, "Allows or denys players to use beds", true),
@@ -32,6 +34,7 @@ public enum Flags {
     commandblock(CMIMaterial.COMMAND_BLOCK, FlagMode.Both, "Allows or denys command block interaction", false),
     command(CMIMaterial.COMMAND_BLOCK, FlagMode.Both, "Allows or denys comamnd use in residences", false),
     container(CMIMaterial.CHEST_MINECART, FlagMode.Both, "Allows or denys use of furnaces, chests, dispensers, etc...", false),
+    containerview(CMIMaterial.FURNACE_MINECART, FlagMode.Both, "Allows or denys shift right click with a spyglass (or directly right click if container permission deny) containers to view the content", false),
     coords(CMIMaterial.COMPASS, FlagMode.Residence, "Hides residence coordinates", true), 
     copper(CMIMaterial.IRON_BLOCK, FlagMode.Both, "Allows to modify copper blocks", true),
     craft(CMIMaterial.STONE, FlagMode.Residence, "Gives table, enchant, brew flags", true),
@@ -71,6 +74,7 @@ public enum Flags {
     icemelt(CMIMaterial.ICE, FlagMode.Residence, "Prevents ice from melting", true),
     ignite(CMIMaterial.FLINT_AND_STEEL, FlagMode.Both, "Allows or denys fire ignition", false),
     itemdrop(CMIMaterial.FEATHER, FlagMode.Both, "Allows or denys item drop", true),
+    itemframe(CMIMaterial.FEATHER, FlagMode.Both, "Allows or denys use of item frame", false),
     itempickup(CMIMaterial.GUNPOWDER, FlagMode.Both, "Allows or denys item pickup", true),
     jump2(CMIMaterial.SLIME_BLOCK, FlagMode.Residence, "Allows to jump 2 blocks high", false),
     jump3(CMIMaterial.SLIME_BLOCK, FlagMode.Residence, "Allows to jump 3 blocks high", false),
@@ -98,7 +102,9 @@ public enum Flags {
     piston(CMIMaterial.PISTON, FlagMode.Residence, "Allow or deny pistons from pushing or pulling blocks in the residence", true),
     pistonprotection(CMIMaterial.STICKY_PISTON, FlagMode.Residence, "Enables or disabled piston block move in or out of residence", true),
     place(CMIMaterial.SEA_LANTERN, FlagMode.Both, "Allows or denys only placement of blocks, overrides the build flag", true),
+    power(CMIMaterial.GOLDEN_CARROT, FlagMode.Both, "Allows or denys RPGItems power in the residence", true),
     pvp(CMIMaterial.WOODEN_SWORD, FlagMode.Residence, "Allow or deny pvp in the residence", false),
+    quickshop(CMIMaterial.CHEST, FlagMode.Both, "Allow or deny create QuickShop in the residence", false),
     rain(CMIMaterial.BLUE_ORCHID, FlagMode.Residence, "Sets weather to rainny in residence", true),
     respawn(CMIMaterial.SUNFLOWER, FlagMode.Residence, "Automaticaly respawns player", false),
     riding(CMIMaterial.SADDLE, FlagMode.Both, "Prevent riding a horse", true),
@@ -229,7 +235,7 @@ public enum Flags {
 
     public void addGroup(String group) {
 	if (groups == null)
-	    groups = new HashSet<String>();
+	    groups = new HashSet<>();
 	groups.add(group.toLowerCase());
     }
 

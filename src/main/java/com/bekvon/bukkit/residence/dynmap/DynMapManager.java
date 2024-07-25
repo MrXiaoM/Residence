@@ -33,7 +33,7 @@ public class DynMapManager {
     public DynmapAPI api;
     MarkerAPI markerapi;
     MarkerSet set;
-    private Map<String, AreaMarker> resareas = new HashMap<String, AreaMarker>();
+    private Map<String, AreaMarker> resareas = new HashMap<>();
     private CMITask scheduler = null;
 
     public DynMapManager(Residence plugin) {
@@ -89,7 +89,7 @@ public class DynMapManager {
                 }
                 if (!flgs.toString().isEmpty())
                     flgs.append("<br/>");
-                flgs.append(one.getKey() + ": " + one.getValue());
+                flgs.append(one.getKey()).append(": ").append(one.getValue());
             }
 
             if (!flgs.toString().isEmpty()) {

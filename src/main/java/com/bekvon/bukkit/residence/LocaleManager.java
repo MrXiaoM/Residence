@@ -8,10 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.Map.Entry;
 
 import org.apache.commons.lang.Validate;
@@ -30,7 +27,7 @@ import net.Zrips.CMILib.Logs.CMIDebug;
 
 public class LocaleManager {
 
-    public HashMap<String, HashMap<String, List<String>>> CommandTab = new HashMap<String, HashMap<String, List<String>>>();
+    public HashMap<String, HashMap<String, List<String>>> CommandTab = new HashMap<>();
     private Residence plugin;
 
     public String path = "CommandHelp.SubCommands.res.SubCommands.";
@@ -41,7 +38,7 @@ public class LocaleManager {
     }
 
     public static void addTabCompleteMain(Object cl, String... tabs) {
-	HashMap<String, List<String>> mp = new HashMap<String, List<String>>();
+	HashMap<String, List<String>> mp = new HashMap<>();
 	mp.put("", Arrays.asList(tabs));
 	Residence.getInstance().getLocaleManager().CommandTab.put(cl.getClass().getSimpleName().toLowerCase(), mp);
     }
@@ -49,7 +46,7 @@ public class LocaleManager {
     public static void addTabCompleteSub(Object cl, String subCmd, String... tabs) {
 	HashMap<String, List<String>> mp = Residence.getInstance().getLocaleManager().CommandTab.get(cl.getClass().getSimpleName().toLowerCase());
 	if (mp == null)
-	    mp = new HashMap<String, List<String>>();
+	    mp = new HashMap<>();
 	mp.put(subCmd.toLowerCase(), Arrays.asList(tabs));
 	Residence.getInstance().getLocaleManager().CommandTab.put(cl.getClass().getSimpleName().toLowerCase(), mp);
     }
@@ -127,7 +124,7 @@ public class LocaleManager {
 	    if (lm.getText() instanceof String)
 		c.get(lm.getPath(), String.valueOf(lm.getText()));
 	    else if (lm.getText() instanceof ArrayList<?>) {
-		List<String> result = new ArrayList<String>();
+		List<String> result = new ArrayList<>();
 		for (Object obj : (ArrayList<?>) lm.getText()) {
 		    if (obj instanceof String) {
 			result.add((String) obj);

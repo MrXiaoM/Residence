@@ -28,7 +28,7 @@ import net.Zrips.CMILib.RawMessages.RawMessage;
 
 public class ResidenceCommandListener implements CommandExecutor {
 
-    private static List<String> AdminCommands = new ArrayList<String>();
+    private static List<String> AdminCommands = new ArrayList<>();
     private static final String label = "res";
 
     public String getLabel() {
@@ -187,7 +187,7 @@ public class ResidenceCommandListener implements CommandExecutor {
 
                 varCheck: if (sender instanceof Player) {
                     int[] regVar = cs.regVar();
-                    List<Integer> list = new ArrayList<Integer>();
+                    List<Integer> list = new ArrayList<>();
                     boolean more = true;
                     for (int one : regVar) {
                         if (one < 0)
@@ -231,7 +231,7 @@ public class ResidenceCommandListener implements CommandExecutor {
                 } else {
 
                     int[] consoleVar = cs.consoleVar();
-                    List<Integer> list = new ArrayList<Integer>();
+                    List<Integer> list = new ArrayList<>();
                     boolean more = true;
                     for (int one : consoleVar) {
                         if (one < 0)
@@ -296,12 +296,24 @@ public class ResidenceCommandListener implements CommandExecutor {
 
         return Arrays.copyOfRange(args, 1, args.length);
     }
-
+    public static void setupExt(ClassLoader classLoader, String extPackage) {
+        ResidenceCommandListener.EXT_COMMANDS_PACKAGE = extPackage;
+        ResidenceCommandListener.classLoader = classLoader;
+    }
+    private static String EXT_COMMANDS_PACKAGE = null;
+    private static ClassLoader classLoader = null;
     private static cmd getCmdClass(String[] args) {
         cmd cmdClass = null;
         try {
-            Class<?> nmsClass;
-            nmsClass = Class.forName("com.bekvon.bukkit.residence.commands." + args[0].toLowerCase());
+            Class<?> nmsClass = null;
+            if (EXT_COMMANDS_PACKAGE != null) try {
+                // 优先寻找 hacked 命令类
+                String className = EXT_COMMANDS_PACKAGE + "." + args[0].toLowerCase();
+                if (classLoader != null) nmsClass = classLoader.loadClass(className);
+                else nmsClass = Class.forName(className);
+            } catch (Throwable ignored) {
+            }
+            if (nmsClass == null) nmsClass = Class.forName("com.bekvon.bukkit.residence.commands." + args[0].toLowerCase());
             if (cmd.class.isAssignableFrom(nmsClass)) {
                 cmdClass = (cmd) nmsClass.getConstructor().newInstance();
             }

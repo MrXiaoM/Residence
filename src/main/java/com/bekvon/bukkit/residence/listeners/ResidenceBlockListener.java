@@ -75,10 +75,10 @@ import net.Zrips.CMILib.Version.Teleporters.CMITeleporter;
 
 public class ResidenceBlockListener implements Listener {
 
-    private List<String> MessageInformed = new ArrayList<String>();
+    private List<String> MessageInformed = new ArrayList<>();
 
-    private Set<UUID> ResCreated = new HashSet<UUID>();
-    public static Set<UUID> newPlayers = new HashSet<UUID>();
+    private Set<UUID> ResCreated = new HashSet<>();
+    public static Set<UUID> newPlayers = new HashSet<>();
 
     private Residence plugin;
 
@@ -251,7 +251,7 @@ public class ResidenceBlockListener implements Listener {
         ClaimedResidence startRes = plugin.getResidenceManager().getByLoc(event.getLocation());
         List<BlockState> blocks = event.getBlocks();
 
-        for (BlockState one : new ArrayList<BlockState>(blocks)) {
+        for (BlockState one : new ArrayList<>(blocks)) {
             ClaimedResidence targetRes = plugin.getResidenceManager().getByLoc(one.getLocation());
             if (startRes == null && targetRes != null || targetRes != null && startRes != null && !startRes.getName().equals(targetRes.getName()) && !startRes.isOwner(targetRes.getOwner())) {
                 blocks.remove(one);
@@ -261,6 +261,7 @@ public class ResidenceBlockListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onBlockBreak(BlockBreakEvent event) {
+        if (event.getClass().getName().contains("quickshop")) return;
         if (!canBreakBlock(event.getPlayer(), event.getBlock(), true))
             event.setCancelled(true);
     }
@@ -496,11 +497,11 @@ public class ResidenceBlockListener implements Listener {
         return res != null && !res.equals(orRes) && !res.isOwner(player) && !res.isTrusted(player);
     }
 
-    private static final List<Vector> chestVectors = new ArrayList<Vector>(Arrays.asList(
-        new Vector(0, 0, -1),
-        new Vector(0, 0, 1),
-        new Vector(1, 0, 0),
-        new Vector(-1, 0, 0)));
+    private static final List<Vector> chestVectors = new ArrayList<>(Arrays.asList(
+            new Vector(0, 0, -1),
+            new Vector(0, 0, 1),
+            new Vector(1, 0, 0),
+            new Vector(-1, 0, 0)));
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onChestPlaceNearResidence(BlockPlaceEvent event) {
@@ -587,7 +588,7 @@ public class ResidenceBlockListener implements Listener {
 
         direction dir = direction.Top;
 
-        List<direction> locked = new ArrayList<direction>();
+        List<direction> locked = new ArrayList<>();
 
         boolean checkCollision = plugin.getConfigManager().isARCCheckCollision();
         int skipped = 0;
@@ -1119,7 +1120,7 @@ public class ResidenceBlockListener implements Listener {
 
     @SuppressWarnings("unchecked")
     private static ArrayList<Vector> getNetherPortalCorners(PortalCreateEvent e) {
-        ArrayList<Vector> locs = new ArrayList<Vector>();
+        ArrayList<Vector> locs = new ArrayList<>();
 
         List<?> ls = new ArrayList<>();
         try {

@@ -24,7 +24,7 @@ public class CommentedYamlConfiguration extends YamlConfiguration {
 
     public CommentedYamlConfiguration() {
 	super();
-	comments = new HashMap<String, String>();
+	comments = new HashMap<>();
     }
 
     @Override
@@ -48,13 +48,9 @@ public class CommentedYamlConfiguration extends YamlConfiguration {
 	data = data.replace("\\x", "\\u00");
 	data = StringEscapeUtils.unescapeJava(data);
 
-	Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8));
-
-	try {
-	    writer.write(data);
-	} finally {
-	    writer.close();
-	}
+        try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8))) {
+            writer.write(data);
+        }
     }
 
     private String insertComments(String yaml) {
@@ -167,7 +163,7 @@ public class CommentedYamlConfiguration extends YamlConfiguration {
 		}
 		newLine.append(System.getProperty("line.separator"));
 		// Add the (modified) line to the total config String
-		newContents.append(newLine.toString());
+		newContents.append(newLine);
 	    }
 
 	    return newContents.toString();
@@ -183,10 +179,10 @@ public class CommentedYamlConfiguration extends YamlConfiguration {
      */
     public void addComment(String path, String... commentLines) {
 	StringBuilder commentstring = new StringBuilder();
-	String leadingSpaces = "";
+	StringBuilder leadingSpaces = new StringBuilder();
 	for (int n = 0; n < path.length(); n++) {
 	    if (path.charAt(n) == '.') {
-		leadingSpaces += "  ";
+		leadingSpaces.append("  ");
 	    }
 	}
 	for (String line : commentLines) {

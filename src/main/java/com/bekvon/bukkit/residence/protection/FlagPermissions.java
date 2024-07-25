@@ -54,17 +54,17 @@ public class FlagPermissions {
     private boolean inherit = false;
 
     final static Map<Material, Flags> matUseFlagList = new EnumMap<>(Material.class);
-    protected Map<UUID, String> cachedPlayerNameUUIDs = new ConcurrentHashMap<UUID, String>();
-    protected Map<String, Map<String, Boolean>> playerFlags = new ConcurrentHashMap<String, Map<String, Boolean>>();
-    protected Map<String, Map<String, Boolean>> groupFlags = new ConcurrentHashMap<String, Map<String, Boolean>>();
-    public Map<String, Boolean> cuboidFlags = new ConcurrentHashMap<String, Boolean>();
+    protected Map<UUID, String> cachedPlayerNameUUIDs = new ConcurrentHashMap<>();
+    protected Map<String, Map<String, Boolean>> playerFlags = new ConcurrentHashMap<>();
+    protected Map<String, Map<String, Boolean>> groupFlags = new ConcurrentHashMap<>();
+    public Map<String, Boolean> cuboidFlags = new ConcurrentHashMap<>();
     protected FlagPermissions parent;
 
     public FlagPermissions() {
-        cuboidFlags = new ConcurrentHashMap<String, Boolean>();
-        playerFlags = new ConcurrentHashMap<String, Map<String, Boolean>>();
-        groupFlags = new ConcurrentHashMap<String, Map<String, Boolean>>();
-        cachedPlayerNameUUIDs = new ConcurrentHashMap<UUID, String>();
+        cuboidFlags = new ConcurrentHashMap<>();
+        playerFlags = new ConcurrentHashMap<>();
+        groupFlags = new ConcurrentHashMap<>();
+        cachedPlayerNameUUIDs = new ConcurrentHashMap<>();
     }
 
     public static enum FlagCombo {
@@ -172,7 +172,7 @@ public class FlagPermissions {
             return;
         }
         if (!FlagPermissions.validFlags.contains(group) && !FlagPermissions.validAreaFlags.contains(group) && !FlagPermissions.validPlayerFlags.contains(group)) {
-            validFlagGroups.computeIfAbsent(group, k -> new HashSet<String>()).add(flag);
+            validFlagGroups.computeIfAbsent(group, k -> new HashSet<>()).add(flag);
         }
     }
 
@@ -377,7 +377,7 @@ public class FlagPermissions {
             flags = playerFlags.get(uuid.toString());
 
             if (flags == null && allowCreate) {
-                flags = Collections.synchronizedMap(new HashMap<String, Boolean>());
+                flags = Collections.synchronizedMap(new HashMap<>());
                 playerFlags.put(uuid.toString(), flags);
                 cachedPlayerNameUUIDs.put(uuid, player.getName());
             }
@@ -394,7 +394,7 @@ public class FlagPermissions {
                 break;
             }
             if (flags == null && allowCreate) {
-                flags = Collections.synchronizedMap(new HashMap<String, Boolean>());
+                flags = Collections.synchronizedMap(new HashMap<>());
                 playerFlags.put(player.getName(), flags);
             }
         }
@@ -446,11 +446,11 @@ public class FlagPermissions {
 
             if (flags == null && allowCreate) {
                 if (uuid != null) {
-                    flags = Collections.synchronizedMap(new HashMap<String, Boolean>());
+                    flags = Collections.synchronizedMap(new HashMap<>());
                     playerFlags.put(uuid.toString(), flags);
                     cachedPlayerNameUUIDs.put(uuid, player);
                 } else {
-                    flags = Collections.synchronizedMap(new HashMap<String, Boolean>());
+                    flags = Collections.synchronizedMap(new HashMap<>());
                     playerFlags.put(player, flags);
                 }
             }
@@ -467,7 +467,7 @@ public class FlagPermissions {
                 break;
             }
             if (flags == null && allowCreate) {
-                flags = Collections.synchronizedMap(new HashMap<String, Boolean>());
+                flags = Collections.synchronizedMap(new HashMap<>());
                 playerFlags.put(player, flags);
             }
         }
@@ -520,7 +520,7 @@ public class FlagPermissions {
     public boolean setGroupFlag(String group, String flag, FlagState state) {
         group = group.toLowerCase();
         if (!groupFlags.containsKey(group)) {
-            groupFlags.put(group, Collections.synchronizedMap(new HashMap<String, Boolean>()));
+            groupFlags.put(group, Collections.synchronizedMap(new HashMap<>()));
         }
         Map<String, Boolean> map = groupFlags.get(group);
         if (state == FlagState.FALSE) {
@@ -767,7 +767,7 @@ public class FlagPermissions {
         // Putting uuid's to main cache for later save
 
         if (Residence.getInstance().getConfigManager().isNewSaveMechanic()) {
-            Map<String, Object> playerFlagsClone = new HashMap<String, Object>();
+            Map<String, Object> playerFlagsClone = new HashMap<>();
             for (Entry<String, Map<String, Boolean>> one : playerFlags.entrySet()) {
                 MinimizeFlags min = Residence.getInstance().getResidenceManager().addFlagsTempCache(world, one.getValue());
                 playerFlagsClone.put(one.getKey(), min.getId());
@@ -775,7 +775,7 @@ public class FlagPermissions {
             root.put("PlayerFlags", playerFlagsClone);
 
             if (!groupFlags.isEmpty()) {
-                Map<String, Object> GroupFlagsClone = new HashMap<String, Object>();
+                Map<String, Object> GroupFlagsClone = new HashMap<>();
                 for (Entry<String, Map<String, Boolean>> one : groupFlags.entrySet()) {
                     MinimizeFlags min = Residence.getInstance().getResidenceManager().addFlagsTempCache(world, one.getValue());
                     GroupFlagsClone.put(one.getKey(), min.getId());
@@ -786,7 +786,7 @@ public class FlagPermissions {
             MinimizeFlags min = Residence.getInstance().getResidenceManager().addFlagsTempCache(world, cuboidFlags);
             if (min == null) {
                 // Cloning map to fix issue for yml anchors being created	
-                root.put("AreaFlags", new HashMap<String, Boolean>(cuboidFlags));
+                root.put("AreaFlags", new HashMap<>(cuboidFlags));
             } else {
                 root.put("AreaFlags", min.getId());
             }
@@ -798,16 +798,16 @@ public class FlagPermissions {
             }
 
             // Cloning map to fix issue for yml anchors being created
-            root.put("AreaFlags", new HashMap<String, Boolean>(cuboidFlags));
+            root.put("AreaFlags", new HashMap<>(cuboidFlags));
         }
 
         return root;
     }
 
     private static HashMap<String, Map<String, Boolean>> clone(Map<String, Map<String, Boolean>> map) {
-        HashMap<String, Map<String, Boolean>> nm = new HashMap<String, Map<String, Boolean>>();
+        HashMap<String, Map<String, Boolean>> nm = new HashMap<>();
         for (Entry<String, Map<String, Boolean>> one : map.entrySet()) {
-            nm.put(one.getKey(), new HashMap<String, Boolean>(one.getValue()));
+            nm.put(one.getKey(), new HashMap<>(one.getValue()));
         }
         return nm;
     }
@@ -834,19 +834,19 @@ public class FlagPermissions {
                 newperms.playerFlags = (Map) root.get("PlayerFlags");
             else {
                 if (newperms instanceof ResidencePermissions) {
-                    Map<String, Map<String, Boolean>> t = new HashMap<String, Map<String, Boolean>>();
-                    Map<String, Boolean> ft = new HashMap<String, Boolean>();
+                    Map<String, Map<String, Boolean>> t = new HashMap<>();
+                    Map<String, Boolean> ft = new HashMap<>();
                     for (Entry<String, Integer> one : ((HashMap<String, Integer>) root.get("PlayerFlags")).entrySet()) {
                         ft = Residence.getInstance().getResidenceManager().getChacheFlags(((ResidencePermissions) newperms).getWorld(), one.getValue());
                         if (ft != null && !ft.isEmpty()) {
                             if (Residence.getInstance().getConfigManager().isOfflineMode() && one.getKey().length() == 36) {
                                 String name = Residence.getInstance().getPlayerName(UUID.fromString(one.getKey()));
                                 if (name != null)
-                                    t.put(name, new HashMap<String, Boolean>(ft));
+                                    t.put(name, new HashMap<>(ft));
                                 else
-                                    t.put(one.getKey(), new HashMap<String, Boolean>(ft));
+                                    t.put(one.getKey(), new HashMap<>(ft));
                             } else
-                                t.put(one.getKey(), new HashMap<String, Boolean>(ft));
+                                t.put(one.getKey(), new HashMap<>(ft));
                         }
                     }
                     if (!t.isEmpty())
@@ -881,12 +881,12 @@ public class FlagPermissions {
                 newperms.groupFlags = (Map) root.get("GroupFlags");
             else {
                 if (newperms instanceof ResidencePermissions) {
-                    Map<String, Map<String, Boolean>> t = new HashMap<String, Map<String, Boolean>>();
-                    Map<String, Boolean> ft = new HashMap<String, Boolean>();
+                    Map<String, Map<String, Boolean>> t = new HashMap<>();
+                    Map<String, Boolean> ft = new HashMap<>();
                     for (Entry<String, Integer> one : ((HashMap<String, Integer>) root.get("GroupFlags")).entrySet()) {
                         ft = Residence.getInstance().getResidenceManager().getChacheFlags(((ResidencePermissions) newperms).getWorld(), one.getValue());
                         if (ft != null && !ft.isEmpty())
-                            t.put(one.getKey(), new HashMap<String, Boolean>(ft));
+                            t.put(one.getKey(), new HashMap<>(ft));
                     }
                     if (!t.isEmpty()) {
                         newperms.groupFlags = t;
@@ -906,10 +906,10 @@ public class FlagPermissions {
                 newperms.cuboidFlags = (Map) root.get("AreaFlags");
             else {
                 if (newperms instanceof ResidencePermissions) {
-                    Map<String, Boolean> ft = new HashMap<String, Boolean>();
+                    Map<String, Boolean> ft = new HashMap<>();
                     ft = Residence.getInstance().getResidenceManager().getChacheFlags(((ResidencePermissions) newperms).getWorld(), (Integer) root.get("AreaFlags"));
                     if (ft != null && !ft.isEmpty())
-                        newperms.cuboidFlags = new HashMap<String, Boolean>(ft);
+                        newperms.cuboidFlags = new HashMap<>(ft);
                 }
             }
 
@@ -965,7 +965,7 @@ public class FlagPermissions {
 
         HashMap<String, String> converts = new HashMap<>();
 
-        List<String> Toremove = new ArrayList<String>();
+        List<String> Toremove = new ArrayList<>();
 
         for (String keyset : playerFlags.keySet()) {
             if (keyset.length() != 36) {
@@ -1091,7 +1091,7 @@ public class FlagPermissions {
     }
 
     public static Set<String> getAllPosibleFlags() {
-        Set<String> t = new HashSet<String>();
+        Set<String> t = new HashSet<>();
         t.addAll(FlagPermissions.validFlags);
         t.addAll(FlagPermissions.validPlayerFlags);
         return t;
@@ -1102,7 +1102,7 @@ public class FlagPermissions {
     }
 
     public List<String> getPosibleFlags(Player player, boolean residence, boolean resadmin) {
-        Set<String> flags = new HashSet<String>();
+        Set<String> flags = new HashSet<>();
         for (Entry<String, Boolean> one : Residence.getInstance().getPermissionManager().getAllFlags().getFlags().entrySet()) {
             if (!one.getValue() && !resadmin && !ResPerm.flag_$1.hasSetPermission(player, one.getKey().toLowerCase()))
                 continue;
@@ -1120,7 +1120,7 @@ public class FlagPermissions {
             flags.add(one.getKey());
         }
 
-        return new ArrayList<String>(flags);
+        return new ArrayList<>(flags);
     }
 
     public String listPlayerFlags(String player) {
@@ -1294,7 +1294,7 @@ public class FlagPermissions {
                     else
                         next = p1Color + next;
                     random = !random;
-                    hover.append(next + " ");
+                    hover.append(next).append(" ");
                 }
             }
 

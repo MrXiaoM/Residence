@@ -1109,7 +1109,12 @@ CommandHelp:
               Translated: 'container - 使用容器'
               Description: '允许或禁止使用箱子, 发射器, 熔炉等容器'
               Info:
-              - '&e用法: &6/res set/pset <领地名称> container true/false/remove'
+                - '&e用法: &6/res set/pset <领地名称> container true/false/remove'
+            containerview:
+              Translated: 'containerview - 查看容器'
+              Description: '允许或禁止手持望远镜Shift+右键(如果没有container权限可直接右键)点击容器查看其内容'
+              Info:
+                - '&e用法: &6/res set/pset <领地名称> containerview true/false/remove'
             coords:
               Translated: 'coords - 领地坐标'
               Description: 显示或隐藏领地坐标

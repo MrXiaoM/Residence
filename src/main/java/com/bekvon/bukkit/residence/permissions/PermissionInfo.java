@@ -12,7 +12,7 @@ public class PermissionInfo {
     private Double maxValue = null;
     private Double minValue = null;
 
-    private Set<String> values = new HashSet<String>();
+    private Set<String> values = new HashSet<>();
 
     public PermissionInfo(String permission, Long delay) {
 	this.permission = permission;

@@ -195,14 +195,12 @@ public class Residence extends JavaPlugin {
 //    private TownManager townManager;
     protected RandomTp RandomTpManager;
     protected DynMapManager DynManager;
-    protected Pl3xMapManager Pl3xManager;
     protected Sorting SortingManager;
     protected AutoSelection AutoSelectionManager;
     protected WESchematicManager SchematicManager;
     private InformationPager InformationPagerManager;
     private WorldGuardInterface worldGuardUtil;
     private int wepVersion = 6;
-    private KingdomsUtil kingdomsUtil;
 
     protected CommandFiller cmdFiller;
 
@@ -220,17 +218,15 @@ public class Residence extends JavaPlugin {
     protected CMITask autosaveBukkitId = null;
 
     private boolean SlimeFun = false;
-    private boolean BigDoors = false;
     private boolean lwc = false;
-    Metrics metrics = null;
 
     protected boolean initsuccess = false;
     public Map<String, String> deleteConfirm;
-    public Map<String, String> UnrentConfirm = new HashMap<String, String>();
+    public Map<String, String> UnrentConfirm = new HashMap<>();
     public List<String> resadminToggle;
-    private ConcurrentHashMap<String, OfflinePlayer> OfflinePlayerList = new ConcurrentHashMap<String, OfflinePlayer>();
-    private Map<UUID, OfflinePlayer> cachedPlayerNameUUIDs = new HashMap<UUID, OfflinePlayer>();
-    private Map<UUID, String> cachedPlayerNames = new HashMap<UUID, String>();
+    private ConcurrentHashMap<String, OfflinePlayer> OfflinePlayerList = new ConcurrentHashMap<>();
+    private Map<UUID, OfflinePlayer> cachedPlayerNameUUIDs = new HashMap<>();
+    private Map<UUID, String> cachedPlayerNames = new HashMap<>();
     private com.sk89q.worldedit.bukkit.WorldEditPlugin wep = null;
     private com.sk89q.worldguard.bukkit.WorldGuardPlugin wg = null;
     private CMIMaterial wepid;
@@ -239,9 +235,9 @@ public class Residence extends JavaPlugin {
     private UUID ServerLandUUID = UUID.fromString("00000000-0000-0000-0000-000000000000");
     private UUID TempUserUUID = UUID.fromString("ffffffff-ffff-ffff-ffff-ffffffffffff");
 
-    public HashMap<String, Long> rtMap = new HashMap<String, Long>();
-    public List<String> teleportDelayMap = new ArrayList<String>();
-    public HashMap<String, ClaimedResidence> teleportMap = new HashMap<String, ClaimedResidence>();
+    public HashMap<String, Long> rtMap = new HashMap<>();
+    public List<String> teleportDelayMap = new ArrayList<>();
+    public HashMap<String, ClaimedResidence> teleportMap = new HashMap<>();
 
     private Placeholder Placeholder;
     private boolean PlaceholderAPIEnabled = false;
@@ -412,12 +408,6 @@ public class Residence extends JavaPlugin {
 
         this.getSelectionManager().onDisable();
 
-        if (this.metrics != null)
-            try {
-                metrics.disable();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         if (getConfigManager().useLeases() && leaseBukkitId != null) {
             leaseBukkitId.cancel();
         }
@@ -446,8 +436,8 @@ public class Residence extends JavaPlugin {
             instance = this;
 
             initsuccess = false;
-            deleteConfirm = new HashMap<String, String>();
-            resadminToggle = new ArrayList<String>();
+            deleteConfirm = new HashMap<>();
+            resadminToggle = new ArrayList<>();
             server = this.getServer();
             dataFolder = this.getDataFolder();
 
@@ -540,43 +530,6 @@ public class Residence extends JavaPlugin {
 
             zip = new ZipLibrary(this);
 
-            Plugin lwcp = Bukkit.getPluginManager().getPlugin("LWC");
-            try {
-                if (lwcp != null) {
-                    try {
-                        ResidenceLWCListener.register(this);
-                        Bukkit.getConsoleSender().sendMessage(this.getPrefix() + " LWC hooked.");
-                        lwc = true;
-                    } catch (Throwable e) {
-                        e.printStackTrace();
-                    }
-                }
-            } catch (Throwable e) {
-                e.printStackTrace();
-            }
-
-            SlimeFun = Bukkit.getPluginManager().getPlugin("Slimefun") != null;
-
-            if (SlimeFun) {
-                try {
-                    SlimefunManager.register(this);
-                } catch (Throwable e) {
-                    SlimeFun = false;
-                    e.printStackTrace();
-                }
-            }
-
-            BigDoors = Bukkit.getPluginManager().getPlugin("BigDoors") != null;
-
-            if (BigDoors) {
-                try {
-                    BigDoorsManager.register(this);
-                } catch (Throwable e) {
-                    BigDoors = false;
-                    e.printStackTrace();
-                }
-            }
-
             this.getConfigManager().copyOverTranslations();
 
             parseHelpEntries();
@@ -587,9 +540,6 @@ public class Residence extends JavaPlugin {
                 switch (this.getConfigManager().getEconomyType()) {
                 case CMIEconomy:
                     this.loadCMIEconomy();
-                    break;
-                case Essentials:
-                    this.loadEssentialsEconomy();
                     break;
                 case None:
                     if (this.getPermissionManager().getPermissionsPlugin() instanceof ResidenceVaultAdapter) {
@@ -605,18 +555,6 @@ public class Residence extends JavaPlugin {
                     if (economy == null) {
                         this.loadCMIEconomy();
                     }
-                    if (economy == null) {
-                        this.loadEssentialsEconomy();
-                    }
-                    if (economy == null) {
-                        this.loadRealEconomy();
-                    }
-                    if (economy == null) {
-                        this.loadIConomy();
-                    }
-                    break;
-                case RealEconomy:
-                    this.loadRealEconomy();
                     break;
                 case Vault:
                     if (this.getPermissionManager().getPermissionsPlugin() instanceof ResidenceVaultAdapter) {
@@ -629,9 +567,6 @@ public class Residence extends JavaPlugin {
                     if (economy == null) {
                         this.loadVaultEconomy();
                     }
-                    break;
-                case iConomy:
-                    this.loadIConomy();
                     break;
                 default:
                     break;
@@ -719,8 +654,6 @@ public class Residence extends JavaPlugin {
                     setWorldEdit();
                 setWorldGuard();
 
-                setKingdoms();
-
                 PluginManager pm = getServer().getPluginManager();
 
                 blistener = new ResidenceBlockListener(this);
@@ -794,9 +727,6 @@ public class Residence extends JavaPlugin {
                 PlaceholderAPIEnabled = true;
             }
 
-            if (getServer().getPluginManager().getPlugin("CrackShot") != null)
-                getServer().getPluginManager().registerEvents(new CrackShot(this), this);
-
             try {
                 // DynMap
                 Plugin dynmap = Bukkit.getPluginManager().getPlugin("dynmap");
@@ -810,19 +740,6 @@ public class Residence extends JavaPlugin {
                 e.printStackTrace();
             }
 
-            try {
-                // Pl3xMap
-                Plugin pl3xmap = Bukkit.getPluginManager().getPlugin("Pl3xMap");
-                if (pl3xmap != null && getConfigManager().Pl3xMapUse) {
-                    Pl3xManager = new Pl3xMapManager(this);
-                    getServer().getPluginManager().registerEvents(new Pl3xMapListeners(this), this);
-                    getPl3xManager().api = Pl3xMap.api();
-                    getPl3xManager().activate();
-                }
-            } catch (Throwable e) {
-                e.printStackTrace();
-            }
-
             int autosaveInt = getConfigManager().getAutoSaveInterval();
             if (autosaveInt < 1) {
                 autosaveInt = 1;
@@ -831,14 +748,14 @@ public class Residence extends JavaPlugin {
             autosaveBukkitId = CMIScheduler.scheduleSyncRepeatingTask(autoSave, autosaveInt, autosaveInt);
 
             if (getConfigManager().getHealInterval() > 0)
-                healBukkitId = CMIScheduler.scheduleSyncRepeatingTask(doHeals, 20, getConfigManager().getHealInterval() * 20);
+                healBukkitId = CMIScheduler.scheduleSyncRepeatingTask(doHeals, 20, getConfigManager().getHealInterval() * 20L);
             if (getConfigManager().getFeedInterval() > 0)
-                feedBukkitId = CMIScheduler.scheduleSyncRepeatingTask(doFeed, 20, getConfigManager().getFeedInterval() * 20);
+                feedBukkitId = CMIScheduler.scheduleSyncRepeatingTask(doFeed, 20, getConfigManager().getFeedInterval() * 20L);
             if (getConfigManager().getSafeZoneInterval() > 0)
-                effectRemoveBukkitId = CMIScheduler.scheduleSyncRepeatingTask(removeBadEffects, 20, getConfigManager().getSafeZoneInterval() * 20);
+                effectRemoveBukkitId = CMIScheduler.scheduleSyncRepeatingTask(removeBadEffects, 20, getConfigManager().getSafeZoneInterval() * 20L);
 
             if (getConfigManager().AutoMobRemoval())
-                DespawnMobsBukkitId = CMIScheduler.scheduleSyncRepeatingTask(DespawnMobs, 20 * getConfigManager().AutoMobRemovalInterval(), 20
+                DespawnMobsBukkitId = CMIScheduler.scheduleSyncRepeatingTask(DespawnMobs, 20L * getConfigManager().AutoMobRemovalInterval(), 20L
                     * getConfigManager().AutoMobRemovalInterval());
 
             if (getConfigManager().useLeases()) {
@@ -861,12 +778,6 @@ public class Residence extends JavaPlugin {
                 if (getPermissionManager().isResidenceAdmin(player)) {
                     turnResAdminOn(player);
                 }
-            }
-            try {
-                metrics = new Metrics(this);
-                metrics.start();
-            } catch (IOException e) {
-                // Failed to submit the stats :-(
             }
             Bukkit.getConsoleSender().sendMessage(getPrefix() + " Enabled! Version " + this.getDescription().getVersion() + " by Zrips");
             initsuccess = true;
@@ -1001,22 +912,6 @@ public class Residence extends JavaPlugin {
         }
     }
 
-    private GameManagement kingdomsmanager = null;
-
-    private void setKingdoms() {
-        if (Bukkit.getPluginManager().getPlugin("Kingdoms") != null) {
-            try {
-                kingdomsmanager = Kingdoms.getManagers();
-            } catch (Throwable e) {
-                this.consoleMessage("Failed to recognize Kingdoms plugin. Compatability disabled");
-            }
-        }
-    }
-
-    public GameManagement getKingdomsManager() {
-        return kingdomsmanager;
-    }
-
     private void setWorldGuard() {
         Plugin wgplugin = server.getPluginManager().getPlugin("WorldGuard");
         if (wgplugin != null) {
@@ -1079,10 +974,6 @@ public class Residence extends JavaPlugin {
 
     public DynMapManager getDynManager() {
         return DynManager;
-    }
-
-    public Pl3xMapManager getPl3xManager() {
-        return Pl3xManager;
     }
 
     public WESchematicManager getSchematicManager() {
@@ -1204,32 +1095,6 @@ public class Residence extends JavaPlugin {
         return wmanager.getPerms(loc.getWorld().getName());
     }
 
-    private void loadIConomy() {
-        Plugin p = getServer().getPluginManager().getPlugin("iConomy");
-        if (p != null) {
-            if (p.getDescription().getVersion().startsWith("6")) {
-                economy = new IConomy6Adapter((com.iCo6.iConomy) p);
-            } else {
-                consoleMessage("UNKNOWN iConomy version!");
-                return;
-            }
-            consoleMessage("Successfully linked with &5iConomy");
-            consoleMessage("Version: " + p.getDescription().getVersion());
-        } else {
-            consoleMessage("iConomy NOT found!");
-        }
-    }
-
-    private void loadEssentialsEconomy() {
-        Plugin p = getServer().getPluginManager().getPlugin("Essentials");
-        if (p != null) {
-            economy = new EssentialsEcoAdapter((Essentials) p);
-            consoleMessage("Successfully linked with &5Essentials Economy");
-        } else {
-            consoleMessage("Essentials Economy NOT found!");
-        }
-    }
-
     private void loadCMIEconomy() {
         Plugin p = getServer().getPluginManager().getPlugin("CMI");
         if (p != null) {
@@ -1237,16 +1102,6 @@ public class Residence extends JavaPlugin {
             consoleMessage("Successfully linked with &5CMIEconomy");
         } else {
             consoleMessage("CMIEconomy NOT found!");
-        }
-    }
-
-    private void loadRealEconomy() {
-        Plugin p = getServer().getPluginManager().getPlugin("RealPlugin");
-        if (p != null) {
-            economy = new RealShopEconomy(new RealEconomy((RealPlugin) p));
-            consoleMessage("Successfully linked with &5RealShop Economy");
-        } else {
-            consoleMessage("RealShop Economy NOT found!");
         }
     }
 
@@ -1330,7 +1185,7 @@ public class Residence extends JavaPlugin {
             boolean emptyRecord = false;
             // Not saving files without any records in them. Mainly for servers with many small temporary worlds
             try {
-                emptyRecord = ((LinkedHashMap) entry.getValue()).isEmpty();
+                emptyRecord = ((LinkedHashMap<?, ?>) entry.getValue()).isEmpty();
             } catch (Throwable e) {
             }
 
@@ -1440,7 +1295,7 @@ public class Residence extends JavaPlugin {
 
         HashMap<Integer, MinimizeFlags> c = getResidenceManager().getCacheFlags().get(worldName);
         if (c == null)
-            c = new HashMap<Integer, MinimizeFlags>();
+            c = new HashMap<>();
         Map<Integer, Object> ms = (Map<Integer, Object>) yml.getRoot().get("Flags");
         if (ms == null)
             return;
@@ -1462,7 +1317,7 @@ public class Residence extends JavaPlugin {
 
         HashMap<Integer, MinimizeMessages> c = getResidenceManager().getCacheMessages().get(worldName);
         if (c == null)
-            c = new HashMap<Integer, MinimizeMessages>();
+            c = new HashMap<>();
         Map<Integer, Object> ms = (Map<Integer, Object>) yml.getRoot().get("Messages");
         if (ms == null)
             return;
@@ -1637,7 +1492,7 @@ public class Residence extends JavaPlugin {
 
         File newGroups = new File(this.getDataFolder(), "config.yml");
 
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         list.add("ResidenceVersion");
         list.add("Global.Flags");
         list.add("Global.FlagPermission");
@@ -1656,7 +1511,7 @@ public class Residence extends JavaPlugin {
 
         File newConfig = new File(this.getDataFolder(), "groups.yml");
         list.clear();
-        list = new ArrayList<String>();
+        list = new ArrayList<>();
         list.add("ResidenceVersion");
         list.add("Global");
         list.add("ItemList");
@@ -1669,7 +1524,7 @@ public class Residence extends JavaPlugin {
 
         File newFlags = new File(this.getDataFolder(), "flags.yml");
         list.clear();
-        list = new ArrayList<String>();
+        list = new ArrayList<>();
         list.add("ResidenceVersion");
         list.add("GroupAssignments");
         list.add("Groups");
@@ -1994,17 +1849,17 @@ public class Residence extends JavaPlugin {
         return getLM().getMessage(path);
     }
 
-    public void msg(CommandSender sender, String text) {
+    public static void msg(CommandSender sender, String text) {
         if (sender != null && text.length() > 0)
             sender.sendMessage(CMIChatColor.translate(text));
     }
 
-    public void msg(Player player, String text) {
+    public static void msg(Player player, String text) {
         if (player != null && !text.isEmpty())
             player.sendMessage(CMIChatColor.translate(text));
     }
 
-    public void msg(CommandSender sender, lm lm, Object... variables) {
+    public static void msg(CommandSender sender, lm lm, Object... variables) {
 
         if (sender == null)
             return;
@@ -2062,12 +1917,6 @@ public class Residence extends JavaPlugin {
             }
         }
         return worldGuardUtil;
-    }
-
-    public KingdomsUtil getKingdomsUtil() {
-        if (kingdomsUtil == null)
-            kingdomsUtil = new KingdomsUtil(this);
-        return kingdomsUtil;
     }
 
     public static Residence getInstance() {

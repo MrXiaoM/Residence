@@ -21,7 +21,7 @@ public class message implements cmd {
     @CommandAnnotation(simple = true, priority = 1000)
     public Boolean perform(Residence plugin, CommandSender sender, String[] args, boolean resadmin) {
         ClaimedResidence res = null;
-        String message = null;
+        StringBuilder message = null;
         Boolean enter = null;
 
         c: for (String one : args) {
@@ -50,10 +50,10 @@ public class message implements cmd {
             }
 
             if (message == null)
-                message = "";
-            if (!message.isEmpty())
-                message += " ";
-            message += one;
+                message = new StringBuilder();
+            if (message.length() > 0)
+                message.append(" ");
+            message.append(one);
         }
 
         if (res == null && sender instanceof Player) {
@@ -87,9 +87,9 @@ public class message implements cmd {
         }
 
         if (message == null)
-            message = "";
+            message = new StringBuilder();
 
-        res.setEnterLeaveMessage(sender, message, enter, resadmin);
+        res.setEnterLeaveMessage(sender, message.toString(), enter, resadmin);
 
         return true;
     }

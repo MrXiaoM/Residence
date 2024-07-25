@@ -43,7 +43,7 @@ public class SelectionManager {
     protected Server server;
     protected Residence plugin;
 
-    private HashMap<UUID, Visualizer> vMap = new HashMap<UUID, Visualizer>();
+    private HashMap<UUID, Visualizer> vMap = new HashMap<>();
 
     Permission ignoreyPermission = new Permission(ResPerm.bypass_ignorey.getPermission(), PermissionDefault.FALSE);
     Permission ignoreyinsubzonePermission = new Permission(ResPerm.bypass_ignoreyinsubzone.getPermission(), PermissionDefault.FALSE);
@@ -342,7 +342,7 @@ public class SelectionManager {
     public SelectionManager(Server server, Residence plugin) {
         this.plugin = plugin;
         this.server = server;
-        selections = Collections.synchronizedMap(new HashMap<UUID, Selection>());
+        selections = Collections.synchronizedMap(new HashMap<>());
     }
 
     public Selection getSelection(Player player) {
@@ -572,7 +572,7 @@ public class SelectionManager {
             RowStart = 0;
         }
 
-        List<Location> locList = new ArrayList<Location>();
+        List<Location> locList = new ArrayList<>();
 
         if (lowLoc.getWorld() != loc.getWorld())
             return locList;
@@ -601,7 +601,7 @@ public class SelectionManager {
 
     public List<Location> GetLocationsWallsByData(Location loc, Double TX, Double TY, Double TZ, Location lowLoc, SelectionSides Sides,
         double Range) {
-        List<Location> locList = new ArrayList<Location>();
+        List<Location> locList = new ArrayList<>();
 
         // North wall
         if (Sides.ShowNorthSide())
@@ -632,7 +632,7 @@ public class SelectionManager {
 
     public List<Location> GetLocationsCornersByData(Location loc, Double TX, Double TY, Double TZ, Location lowLoc, SelectionSides Sides,
         double Range) {
-        List<Location> locList = new ArrayList<Location>();
+        List<Location> locList = new ArrayList<>();
 
         // North bottom line
         if (Sides.ShowBottomSide() && Sides.ShowNorthSide())
@@ -702,8 +702,8 @@ public class SelectionManager {
         Location loc = player.getLocation();
         int Range = plugin.getConfigManager().getVisualizerRange();
 
-        final List<Location> locList = new ArrayList<Location>();
-        final List<Location> errorLocList = new ArrayList<Location>();
+        final List<Location> locList = new ArrayList<>();
+        final List<Location> errorLocList = new ArrayList<>();
 
         final boolean same = v.isSameLoc();
         if (!same) {

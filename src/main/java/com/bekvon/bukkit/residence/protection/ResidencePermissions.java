@@ -293,7 +293,7 @@ public class ResidencePermissions extends FlagPermissions {
             for (Entry<String, Boolean> flag : glists.getValue().entrySet()) {
                 if (group.hasFlagAccess(flag.getKey()) || resadmin) {
                     if (!this.groupFlags.containsKey(glists.getKey()))
-                        this.groupFlags.put(glists.getKey(), Collections.synchronizedMap(new HashMap<String, Boolean>()));
+                        this.groupFlags.put(glists.getKey(), Collections.synchronizedMap(new HashMap<>()));
                     this.groupFlags.get(glists.getKey()).put(flag.getKey(), flag.getValue());
                 } else {
                     if (player != null)

@@ -27,7 +27,7 @@ public class ChatChannel {
 	this.channelName = channelName;
 	this.ChatPrefix = ChatPrefix;
 	this.ChannelColor = chatColor;
-	members = new ArrayList<String>();
+	members = new ArrayList<>();
     }
 
     public String getChannelName() {

@@ -32,8 +32,8 @@ public class ResidenceRaid {
     private Long endsAt = 0L;
     private Long immunityUntil = null;
 //    private Long lastSiegeEnded = 0L;
-    private HashMap<UUID, RaidAttacker> attackers = new HashMap<UUID, RaidAttacker>();
-    private HashMap<UUID, RaidDefender> defenders = new HashMap<UUID, RaidDefender>();
+    private HashMap<UUID, RaidAttacker> attackers = new HashMap<>();
+    private HashMap<UUID, RaidDefender> defenders = new HashMap<>();
 
     private CMITask schedRaidEndId = null;
     private CMITask shedRaidStartId = null;
@@ -52,7 +52,7 @@ public class ResidenceRaid {
     }
 
     public Long getCooldownEnd() {
-        return endsAt + (ConfigManager.RaidCooldown * 1000);
+        return endsAt + (ConfigManager.RaidCooldown * 1000L);
     }
 
     public void setEndsAt(Long endsAt) {
@@ -199,7 +199,7 @@ public class ResidenceRaid {
                     setTitleOfBar(Residence.getInstance().msg(msg, getDefenders().size(), getAttackers().size()));
                 }
             };
-            Double secLeft = ((isUnderRaid() ? getEndsAt() : getStartsAt()) - System.currentTimeMillis()) / 1000D;
+            double secLeft = ((isUnderRaid() ? getEndsAt() : getStartsAt()) - System.currentTimeMillis()) / 1000D;
             barInfo.setKeepForTicks(22);
             barInfo.setColor(color);
             barInfo.setTitleOfBar(Residence.getInstance().msg(msg, getDefenders().size(), getAttackers().size()));
@@ -325,8 +325,8 @@ public class ResidenceRaid {
         if (attacker != null)
             addAttacker(attacker);
         addDefender(res.getRPlayer().getPlayer());
-        setStartsAt(System.currentTimeMillis() + (ConfigManager.PreRaidTimer * 1000));
-        setEndsAt(getStartsAt() + (ConfigManager.RaidTimer * 1000));
+        setStartsAt(System.currentTimeMillis() + (ConfigManager.PreRaidTimer * 1000L));
+        setEndsAt(getStartsAt() + (ConfigManager.RaidTimer * 1000L));
 
         ResidenceRaidPreStartEvent start = new ResidenceRaidPreStartEvent(res, getAttackers());
 

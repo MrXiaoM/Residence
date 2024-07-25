@@ -10,6 +10,7 @@ import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -32,8 +33,8 @@ public class setFlagInfo {
     private ClaimedResidence residence;
     private Player player;
     private String targetPlayer = null;
-    private LinkedHashMap<Flags, List<String>> description = new LinkedHashMap<Flags, List<String>>();
-    private List<CMIGuiButton> buttons = new ArrayList<CMIGuiButton>();
+    private LinkedHashMap<Flags, List<String>> description = new LinkedHashMap<>();
+    private List<CMIGuiButton> buttons = new ArrayList<>();
     private boolean admin = false;
 
     public setFlagInfo(ClaimedResidence residence, Player player, boolean admin) {
@@ -99,8 +100,8 @@ public class setFlagInfo {
 
 	List<String> flags = residence.getPermissions().getPosibleFlags(player, true, this.admin);
 
-	Map<String, Boolean> resFlags = new HashMap<String, Boolean>();
-	Map<String, Object> TempPermMap = new LinkedHashMap<String, Object>();
+	Map<String, Boolean> resFlags = new HashMap<>();
+	Map<String, Object> TempPermMap = new LinkedHashMap<>();
 
 	Map<String, Boolean> globalFlags = Residence.getInstance().getPermissionManager().getAllFlags().getFlags();
 
@@ -135,10 +136,10 @@ public class setFlagInfo {
 
 //	FlagData flagData = Residence.getInstance().getFlagUtilManager().getFlagData();
 
-	LinkedHashMap<String, Object> permMap = new LinkedHashMap<String, Object>();
 	for (Entry<String, Object> one : TempPermMap.entrySet()) {
 	    permMap.put(one.getKey(), one.getValue());
 	}
+	LinkedHashMap<String, Object> permMap = new LinkedHashMap<>();
 
 	String cmdPrefix = admin ? "resadmin" : "res";
 
@@ -187,14 +188,14 @@ public class setFlagInfo {
     }
 
     private void recalculatePlayer() {
-	Map<String, Boolean> globalFlags = new HashMap<String, Boolean>();
+	Map<String, Boolean> globalFlags = new HashMap<>();
 	for (Flags oneFlag : Flags.values()) {
 	    globalFlags.put(oneFlag.toString(), oneFlag.isEnabled());
 	}
 
 	List<String> flags = residence.getPermissions().getPosibleFlags(player, false, this.admin);
 
-	Map<String, Boolean> resFlags = new HashMap<String, Boolean>();
+	Map<String, Boolean> resFlags = new HashMap<>();
 
 	for (Entry<String, Boolean> one : residence.getPermissions().getFlags().entrySet()) {
 	    if (flags.contains(one.getKey()))
@@ -204,7 +205,7 @@ public class setFlagInfo {
 	if (targetPlayer != null) {
 
 	    Set<String> PosibleResPFlags = FlagPermissions.getAllPosibleFlags();
-	    Map<String, Boolean> temp = new HashMap<String, Boolean>();
+	    Map<String, Boolean> temp = new HashMap<>();
 	    for (String one : PosibleResPFlags) {
 		if (globalFlags.containsKey(one))
 		    temp.put(one, globalFlags.get(one));
@@ -219,7 +220,7 @@ public class setFlagInfo {
 		}
 	}
 
-	LinkedHashMap<String, Object> TempPermMap = new LinkedHashMap<String, Object>();
+	LinkedHashMap<String, Object> TempPermMap = new LinkedHashMap<>();
 
 	for (Entry<String, Boolean> one : globalFlags.entrySet()) {
 	    if (!flags.contains(one.getKey()))
@@ -341,7 +342,7 @@ public class setFlagInfo {
 	if (MiscInfoMeta == null)
 	    return miscInfo;
 	MiscInfoMeta.setDisplayName(ChatColor.GREEN + flagName);
-	List<String> lore = new ArrayList<String>();
+	List<String> lore = new ArrayList<>();
 	String variable = "";
 	switch (state) {
 	case FALSE:

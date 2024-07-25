@@ -1,12 +1,8 @@
 package com.bekvon.bukkit.residence.commands;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.TimeZone;
 
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
@@ -27,7 +23,6 @@ import com.bekvon.bukkit.residence.shopStuff.Vote;
 import net.Zrips.CMILib.Colors.CMIChatColor;
 import net.Zrips.CMILib.Container.PageInfo;
 import net.Zrips.CMILib.FileHandler.ConfigReader;
-import net.Zrips.CMILib.Logs.CMIDebug;
 import net.Zrips.CMILib.RawMessages.RawMessage;
 
 public class shop implements cmd {
@@ -202,7 +197,7 @@ public class shop implements cmd {
 
             ClaimedResidence res = null;
 
-            String desc = "";
+            StringBuilder desc = new StringBuilder();
             if (args.length >= 1) {
                 res = plugin.getResidenceManager().getByLoc(player.getLocation());
                 if (res == null) {
@@ -210,9 +205,9 @@ public class shop implements cmd {
                     return true;
                 }
                 for (int i = 2; i < args.length; i++) {
-                    desc += args[i];
+                    desc.append(args[i]);
                     if (i < args.length - 1)
-                        desc += " ";
+                        desc.append(" ");
                 }
             }
 
@@ -224,8 +219,8 @@ public class shop implements cmd {
                 return true;
             }
 
-            res.setShopDesc(desc);
-            plugin.msg(player, lm.Shop_DescChange, CMIChatColor.translate(desc));
+            res.setShopDesc(desc.toString());
+            plugin.msg(player, lm.Shop_DescChange, CMIChatColor.translate(desc.toString()));
             return true;
         }
         if (args.length == 2 && args[0].equalsIgnoreCase("createboard")) {

@@ -68,7 +68,7 @@ public class SignUtil {
             return;
 
         ConfigurationSection ConfCategory = f.getConfigurationSection("Signs");
-        ArrayList<String> categoriesList = new ArrayList<String>(ConfCategory.getKeys(false));
+        ArrayList<String> categoriesList = new ArrayList<>(ConfCategory.getKeys(false));
         if (categoriesList.size() == 0)
             return;
         for (String category : categoriesList) {

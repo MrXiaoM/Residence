@@ -29,7 +29,7 @@ public class removeworld implements cmd {
 	    return false;
 	}
 
-	List<String> playerExceptions = new ArrayList<String>();
+	List<String> playerExceptions = new ArrayList<>();
 	if (args.length == 2) {
 	    for (String one : args[1].split(",")) {
 		// Not lowercasing UUID's

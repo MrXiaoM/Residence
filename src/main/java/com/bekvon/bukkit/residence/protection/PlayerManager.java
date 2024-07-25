@@ -24,8 +24,8 @@ import com.bekvon.bukkit.residence.permissions.PermissionGroup;
 import net.Zrips.CMILib.Logs.CMIDebug;
 
 public class PlayerManager implements ResidencePlayerInterface {
-    private ConcurrentHashMap<String, ResidencePlayer> players = new ConcurrentHashMap<String, ResidencePlayer>();
-    private ConcurrentHashMap<String, ResidencePlayer> playersUuid = new ConcurrentHashMap<String, ResidencePlayer>();
+    private ConcurrentHashMap<String, ResidencePlayer> players = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<String, ResidencePlayer> playersUuid = new ConcurrentHashMap<>();
     private Residence plugin;
 
     public PlayerManager(Residence plugin) {
@@ -102,7 +102,7 @@ public class PlayerManager implements ResidencePlayerInterface {
 
     @Override
     public ArrayList<String> getResidenceList(UUID uuid) {
-        ArrayList<String> temp = new ArrayList<String>();
+	ArrayList<String> temp = new ArrayList<>();
 //	playerJoin(player, false);
         ResidencePlayer resPlayer = playersUuid.get(uuid.toString());
         if (resPlayer != null) {
@@ -136,7 +136,7 @@ public class PlayerManager implements ResidencePlayerInterface {
     }
 
     public ArrayList<String> getResidenceList(String player, boolean showhidden, boolean onlyHidden) {
-        ArrayList<String> temp = new ArrayList<String>();
+	ArrayList<String> temp = new ArrayList<>();
 //	playerJoin(player, false);
         ResidencePlayer resPlayer = this.getResidencePlayer(player);
         if (resPlayer == null)

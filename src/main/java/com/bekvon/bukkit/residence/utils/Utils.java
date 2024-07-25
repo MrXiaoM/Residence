@@ -91,7 +91,7 @@ public class Utils {
 	    distance = 15 * 16;
 	if (distance < 1)
 	    distance = 1;
-	ArrayList<Block> blocks = new ArrayList<Block>();
+	ArrayList<Block> blocks = new ArrayList<>();
 	Iterator<Block> itr = new BlockIterator(player, distance);
 	while (itr.hasNext()) {
 	    Block block = itr.next();
@@ -246,7 +246,7 @@ public class Utils {
     }
 
     public static List<Block> getPistonRetractBlocks(BlockPistonRetractEvent event) {
-	List<Block> blocks = new ArrayList<Block>();
+	List<Block> blocks = new ArrayList<>();
 	if (Version.isCurrentEqualOrLower(Version.v1_7_R4)) {
 	    blocks.add(event.getBlock());
 	} else {

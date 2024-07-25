@@ -45,7 +45,7 @@ public class HelpEntry {
 
     public HelpEntry(String entryname) {
 	name = entryname;
-	subentrys = new ArrayList<HelpEntry>();
+	subentrys = new ArrayList<>();
 	lines = new String[0];
     }
 
@@ -87,13 +87,13 @@ public class HelpEntry {
 	    if (helplines.get(i).getCommand() != null) {
 		HelpEntry sub = this.getSubEntry(helplines.get(i).getCommand());
 
-		String desc = "&6";
+		StringBuilder desc = new StringBuilder("&6");
 		int y = 0;
 		for (String one : sub.lines) {
-		    desc += one;
+		    desc.append(one);
 		    y++;
 		    if (y < sub.lines.length) {
-			desc += "\n";
+			desc.append("\n");
 		    }
 		}
 
@@ -101,7 +101,7 @@ public class HelpEntry {
 		    path = path.replace("/res ", "/resadmin ");
 
 		RawMessage rm = new RawMessage();
-		rm.addText(CMIChatColor.translate("&6" + helplines.get(i).getDesc())).addHover(desc).addSuggestion(path + helplines.get(i).getCommand());
+		rm.addText(CMIChatColor.translate("&6" + helplines.get(i).getDesc())).addHover(desc.toString()).addSuggestion(path + helplines.get(i).getCommand());
 		rm.show(sender);
 
 	    } else
@@ -123,7 +123,7 @@ public class HelpEntry {
     }
 
     private List<HelpLines> getHelpData(CommandSender sender, boolean resadmin) {
-	List<HelpLines> helplines = new ArrayList<HelpLines>();
+	List<HelpLines> helplines = new ArrayList<>();
 
 	for (String one : lines) {
 	    helplines.add(new HelpLines(null, one));
@@ -131,7 +131,7 @@ public class HelpEntry {
 
 	FlagPermissions GlobalFlags = Residence.getInstance().getPermissionManager().getAllFlags();
 
-	Map<String, String> unsortMap = new HashMap<String, String>();
+	Map<String, String> unsortMap = new HashMap<>();
 
 	for (HelpEntry entry : subentrys) {
 
@@ -226,7 +226,7 @@ public class HelpEntry {
     }
 
     public static HelpEntry parseHelp(FileConfiguration node, String key) {
-	String split[] = key.split("\\.");
+	String[] split = key.split("\\.");
 	String thisname = split[split.length - 1];
 	HelpEntry entry = new HelpEntry(thisname);
 	ConfigurationSection keysnode = node.getConfigurationSection(key);
@@ -288,17 +288,17 @@ public class HelpEntry {
 
     @SuppressWarnings("deprecation")
     public Set<String> getSubCommands(CommandSender sender, String[] args) {
-	Set<String> subCommands = new HashSet<String>();
+	Set<String> subCommands = new HashSet<>();
 	int neededArgPlace = args.length - 2;
 
 	if (neededArgPlace < 0)
 	    neededArgPlace = 0;
 
-	List<String> ArgsList = new ArrayList<String>();
+	List<String> ArgsList = new ArrayList<>();
 
 	if (args.length > 0) {
-	    HashMap<String, List<String>> mp = new HashMap<String, List<String>>();
-	    List<String> base = new ArrayList<String>();
+	    HashMap<String, List<String>> mp = new HashMap<>();
+	    List<String> base = new ArrayList<>();
 	    for (Entry<String, HashMap<String, List<String>>> one : Residence.getInstance().getLocaleManager().CommandTab.entrySet()) {
 		if (one.getKey().startsWith(args[0].toLowerCase())) {
 		    mp.putAll(one.getValue());
@@ -362,7 +362,7 @@ public class HelpEntry {
 
 	if (NeededArg != null) {
 
-	    List<String> list = new ArrayList<String>();
+	    List<String> list = new ArrayList<>();
 
 	    if (NeededArg.contains("%%")) {
 		list.addAll(Arrays.asList(NeededArg.split("%%")));

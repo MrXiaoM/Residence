@@ -87,7 +87,7 @@ public class FlagUtil {
                 openUI(flag, new PageInfo(45, flag.getButtons().size(), page), player, title);
             }
         };
-        gui.setTitle(title);
+        gui.setTitle(title + "§9§k §r");
         gui.setInvSize(GUIRows.r6);
 
         for (CMIGuiButton one : flag.getButtons()) {

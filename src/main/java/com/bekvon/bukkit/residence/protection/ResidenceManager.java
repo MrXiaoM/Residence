@@ -62,13 +62,13 @@ import net.Zrips.CMILib.Version.Schedulers.CMIScheduler;
 public class ResidenceManager implements ResidenceInterface {
     protected ConcurrentHashMap<String, ClaimedResidence> residences;
     protected Map<String, Map<ChunkRef, List<ClaimedResidence>>> chunkResidences;
-    protected List<ClaimedResidence> shops = new ArrayList<ClaimedResidence>();
+    protected List<ClaimedResidence> shops = new ArrayList<>();
     private Residence plugin;
 
     public ResidenceManager(Residence plugin) {
-        residences = new ConcurrentHashMap<String, ClaimedResidence>();
-        chunkResidences = new HashMap<String, Map<ChunkRef, List<ClaimedResidence>>>();
-        shops = new ArrayList<ClaimedResidence>();
+        residences = new ConcurrentHashMap<>();
+        chunkResidences = new HashMap<>();
+        shops = new ArrayList<>();
         this.plugin = plugin;
     }
 
@@ -123,7 +123,7 @@ public class ResidenceManager implements ResidenceInterface {
     }
 
     public List<ClaimedResidence> getByChunk(Chunk chunk) {
-        List<ClaimedResidence> list = new ArrayList<ClaimedResidence>();
+        List<ClaimedResidence> list = new ArrayList<>();
         if (chunk == null)
             return list;
         World world = chunk.getWorld();
@@ -137,7 +137,7 @@ public class ResidenceManager implements ResidenceInterface {
         ChunkRef chunkRef = new ChunkRef(chunk.getX(), chunk.getZ());
         Map<ChunkRef, List<ClaimedResidence>> ChunkMap = chunkResidences.get(worldName);
         List<ClaimedResidence> ls = ChunkMap.get(chunkRef);
-        return ls == null ? list : new ArrayList<ClaimedResidence>(ls);
+        return ls == null ? list : new ArrayList<>(ls);
     }
 
     @Override
@@ -388,7 +388,7 @@ public class ResidenceManager implements ResidenceInterface {
     }
 
     public Map<String, ClaimedResidence> getResidenceMapList(String targetplayer, boolean showhidden) {
-        Map<String, ClaimedResidence> temp = new HashMap<String, ClaimedResidence>();
+        Map<String, ClaimedResidence> temp = new HashMap<>();
         for (Entry<String, ClaimedResidence> res : residences.entrySet()) {
             if (res.getValue().isOwner(targetplayer)) {
                 boolean hidden = res.getValue().getPermissions().has("hidden", false);
@@ -436,7 +436,7 @@ public class ResidenceManager implements ResidenceInterface {
     }
 
     public TreeMap<String, ClaimedResidence> getFromAllResidencesMap(boolean showhidden, boolean onlyHidden, World world) {
-        TreeMap<String, ClaimedResidence> list = new TreeMap<String, ClaimedResidence>();
+        TreeMap<String, ClaimedResidence> list = new TreeMap<>();
         for (Entry<String, ClaimedResidence> res : residences.entrySet()) {
             boolean hidden = res.getValue().getPermissions().has("hidden", false);
             if (onlyHidden && !hidden)
@@ -502,7 +502,7 @@ public class ResidenceManager implements ResidenceInterface {
 
         Map<ChunkRef, List<ClaimedResidence>> refs = chunkResidences.get(worldName);
 
-        Set<ClaimedResidence> resSet = new HashSet<ClaimedResidence>();
+        Set<ClaimedResidence> resSet = new HashSet<>();
 
         if (refs == null)
             return resSet;
@@ -707,7 +707,7 @@ public class ResidenceManager implements ResidenceInterface {
     }
 
     public void removeAllByOwner(String owner) {
-        ResidencePlayer rPlayer = ResidencePlayer.get(owner);
+        ResidencePlayer rPlayer = plugin.getPlayerManager().getResidencePlayer(owner);
         for (ClaimedResidence oneRes : rPlayer.getResList()) {
             removeResidence(rPlayer, oneRes, true);
         }
@@ -827,9 +827,9 @@ public class ResidenceManager implements ResidenceInterface {
             RentableLand rentable = plugin.getRentManager().getRentableLand(areaname);
             StringBuilder rentableString = new StringBuilder();
             if (rentable != null) {
-                rentableString.append(plugin.msg(lm.General_Cost, rentable.cost, rentable.days) + "\n");
-                rentableString.append(plugin.msg(lm.Rentable_AllowRenewing, rentable.AllowRenewing) + "\n");
-                rentableString.append(plugin.msg(lm.Rentable_StayInMarket, rentable.StayInMarket) + "\n");
+                rentableString.append(plugin.msg(lm.General_Cost, rentable.cost, rentable.days)).append("\n");
+                rentableString.append(plugin.msg(lm.Rentable_AllowRenewing, rentable.AllowRenewing)).append("\n");
+                rentableString.append(plugin.msg(lm.Rentable_StayInMarket, rentable.StayInMarket)).append("\n");
                 rentableString.append(plugin.msg(lm.Rentable_AllowAutoPay, rentable.AllowAutoPay));
             }
             if (sender instanceof Player) {
@@ -847,16 +847,15 @@ public class ResidenceManager implements ResidenceInterface {
 
             StringBuilder rentableString = new StringBuilder();
             if (rented != null) {
-                rentableString.append(plugin.msg(lm.Rent_Expire, GetTime.getTime(rented.endTime)) + "\n");
+                rentableString.append(plugin.msg(lm.Rent_Expire, GetTime.getTime(rented.endTime))).append("\n");
                 if (rented.player.equals(sender.getName()) || resadmin || res.isOwner(sender))
-                    rentableString.append((rented.AutoPay ? plugin.msg(lm.Rent_AutoPayTurnedOn) : plugin.msg(lm.Rent_AutoPayTurnedOff))
-                        + "\n");
+                    rentableString.append(rented.AutoPay ? plugin.msg(lm.Rent_AutoPayTurnedOn) : plugin.msg(lm.Rent_AutoPayTurnedOff)).append("\n");
             }
 
             if (rentable != null) {
-                rentableString.append(plugin.msg(lm.General_Cost, rentable.cost, rentable.days) + "\n");
-                rentableString.append(plugin.msg(lm.Rentable_AllowRenewing, rentable.AllowRenewing) + "\n");
-                rentableString.append(plugin.msg(lm.Rentable_StayInMarket, rentable.StayInMarket) + "\n");
+                rentableString.append(plugin.msg(lm.General_Cost, rentable.cost, rentable.days)).append("\n");
+                rentableString.append(plugin.msg(lm.Rentable_AllowRenewing, rentable.AllowRenewing)).append("\n");
+                rentableString.append(plugin.msg(lm.Rentable_StayInMarket, rentable.StayInMarket)).append("\n");
                 rentableString.append(plugin.msg(lm.Rentable_AllowAutoPay, rentable.AllowAutoPay));
             }
 
@@ -922,7 +921,7 @@ public class ResidenceManager implements ResidenceInterface {
         Map<String, Object> worldmap = new LinkedHashMap<>();
         for (String worldName : getWorldNames()) {
             Map<String, Object> resmap = new LinkedHashMap<>();
-            for (Entry<String, ClaimedResidence> res : (new TreeMap<String, ClaimedResidence>(residences)).entrySet()) {
+            for (Entry<String, ClaimedResidence> res : (new TreeMap<>(residences)).entrySet()) {
                 if (!res.getValue().getWorld().equals(worldName))
                     continue;
 
@@ -945,13 +944,13 @@ public class ResidenceManager implements ResidenceInterface {
     }
 
     // Optimizing save file
-    HashMap<String, List<MinimizeMessages>> optimizeMessages = new HashMap<String, List<MinimizeMessages>>();
-    HashMap<String, List<MinimizeFlags>> optimizeFlags = new HashMap<String, List<MinimizeFlags>>();
+    HashMap<String, List<MinimizeMessages>> optimizeMessages = new HashMap<>();
+    HashMap<String, List<MinimizeFlags>> optimizeFlags = new HashMap<>();
 
     public MinimizeMessages addMessageToTempCache(String world, String enter, String leave) {
         List<MinimizeMessages> ls = optimizeMessages.get(world);
         if (ls == null)
-            ls = new ArrayList<MinimizeMessages>();
+            ls = new ArrayList<>();
         for (MinimizeMessages one : ls) {
             if (!one.add(enter, leave))
                 continue;
@@ -964,7 +963,7 @@ public class ResidenceManager implements ResidenceInterface {
     }
 
     public HashMap<Integer, Object> getMessageCatch(String world) {
-        HashMap<Integer, Object> t = new HashMap<Integer, Object>();
+        HashMap<Integer, Object> t = new HashMap<>();
         List<MinimizeMessages> ls = optimizeMessages.get(world);
         if (ls == null)
             return null;
@@ -982,7 +981,7 @@ public class ResidenceManager implements ResidenceInterface {
             return null;
         List<MinimizeFlags> ls = optimizeFlags.get(world);
         if (ls == null)
-            ls = new ArrayList<MinimizeFlags>();
+            ls = new ArrayList<>();
         for (MinimizeFlags one : ls) {
             if (!one.add(map))
                 continue;
@@ -995,7 +994,7 @@ public class ResidenceManager implements ResidenceInterface {
     }
 
     public HashMap<Integer, Object> getFlagsCatch(String world) {
-        HashMap<Integer, Object> t = new HashMap<Integer, Object>();
+        HashMap<Integer, Object> t = new HashMap<>();
         List<MinimizeFlags> ls = optimizeFlags.get(world);
         if (ls == null)
             return null;
@@ -1010,8 +1009,8 @@ public class ResidenceManager implements ResidenceInterface {
         cacheFlags.clear();
     }
 
-    HashMap<String, HashMap<Integer, MinimizeMessages>> cacheMessages = new HashMap<String, HashMap<Integer, MinimizeMessages>>();
-    HashMap<String, HashMap<Integer, MinimizeFlags>> cacheFlags = new HashMap<String, HashMap<Integer, MinimizeFlags>>();
+    HashMap<String, HashMap<Integer, MinimizeMessages>> cacheMessages = new HashMap<>();
+    HashMap<String, HashMap<Integer, MinimizeFlags>> cacheFlags = new HashMap<>();
 
     public HashMap<String, HashMap<Integer, MinimizeMessages>> getCacheMessages() {
         return cacheMessages;
@@ -1052,7 +1051,7 @@ public class ResidenceManager implements ResidenceInterface {
     }
 
     public Set<String> getWorldNames() {
-        Set<String> worldnames = new HashSet<String>();
+        Set<String> worldnames = new HashSet<>();
         File saveFolder = new File(plugin.dataFolder, "Save");
         try {
             File worldFolder = new File(saveFolder, "Worlds");
@@ -1460,7 +1459,7 @@ public class ResidenceManager implements ResidenceInterface {
             }
         }
         chunkResidences.remove(world);
-        chunkResidences.put(world, new HashMap<ChunkRef, List<ClaimedResidence>>());
+        chunkResidences.put(world, new HashMap<>());
         if (count == 0) {
             sender.sendMessage(ChatColor.RED + "No residences found in world: " + ChatColor.YELLOW + world);
         } else {

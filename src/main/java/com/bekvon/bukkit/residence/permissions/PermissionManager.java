@@ -45,7 +45,7 @@ public class PermissionManager {
     protected Map<String, String> playersGroup;
     protected FlagPermissions globalFlagPerms;
 
-    protected HashMap<String, PlayerGroup> groupsMap = new HashMap<String, PlayerGroup>();
+    protected HashMap<String, PlayerGroup> groupsMap = new HashMap<>();
     private PermissionGroup defaultGroup = null;
     private Residence plugin;
 
@@ -55,8 +55,8 @@ public class PermissionManager {
     public PermissionManager(Residence plugin) {
         this.plugin = plugin;
         try {
-            groups = new LinkedHashMap<String, PermissionGroup>();
-            playersGroup = Collections.synchronizedMap(new HashMap<String, String>());
+            groups = new LinkedHashMap<>();
+            playersGroup = Collections.synchronizedMap(new HashMap<>());
             globalFlagPerms = new FlagPermissions();
             this.readConfig();
             checkPermissions();
@@ -147,13 +147,6 @@ public class PermissionManager {
                 return;
             }
             Bukkit.getConsoleSender().sendMessage(plugin.getPrefix() + " Found Vault, but Vault reported no usable permissions system...");
-        }
-
-        p = server.getPluginManager().getPlugin("bPermissions");
-        if (p != null) {
-            perms = new BPermissionsAdapter();
-            Bukkit.getConsoleSender().sendMessage(plugin.getPrefix() + " Found bPermissions Plugin!");
-            return;
         }
 
         Bukkit.getConsoleSender().sendMessage(plugin.getPrefix() + " Permissions plugin NOT FOUND!");
@@ -513,7 +506,7 @@ public class PermissionManager {
         }
     }
 
-    private HashMap<UUID, HashMap<String, PermissionInfo>> cache = new HashMap<UUID, HashMap<String, PermissionInfo>>();
+    private HashMap<UUID, HashMap<String, PermissionInfo>> cache = new HashMap<>();
 
     private Runnable cacheClear = () -> cache.clear();
 
@@ -532,7 +525,7 @@ public class PermissionManager {
     public PermissionInfo addToCache(Player player, String perm, boolean has, Long delayInMiliseconds) {
         HashMap<String, PermissionInfo> old = cache.get(player.getUniqueId());
         if (old == null) {
-            old = new HashMap<String, PermissionInfo>();
+            old = new HashMap<>();
         }
 
         PermissionInfo info = new PermissionInfo(perm, delayInMiliseconds);
@@ -618,7 +611,7 @@ public class PermissionManager {
 
         HashMap<String, PermissionInfo> c = cache.get(uuid);
         if (c == null)
-            c = new HashMap<String, PermissionInfo>();
+            c = new HashMap<>();
 
         PermissionInfo p = c.get(perm);
 
@@ -672,7 +665,7 @@ public class PermissionManager {
 
     private static HashMap<String, Boolean> getAll(Player player, String pref) {
         pref = pref.endsWith(".") ? pref : pref + ".";
-        HashMap<String, Boolean> mine = new HashMap<String, Boolean>();
+        HashMap<String, Boolean> mine = new HashMap<>();
         for (PermissionAttachmentInfo permission : player.getEffectivePermissions()) {
             if (permission.getPermission().startsWith(pref))
                 mine.put(permission.getPermission(), permission.getValue());

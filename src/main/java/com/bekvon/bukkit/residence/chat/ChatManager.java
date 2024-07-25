@@ -16,7 +16,7 @@ public class ChatManager implements ChatInterface {
 
     public ChatManager() {
 	server = Residence.getInstance().getServ();
-	channelmap = new HashMap<String, ChatChannel>();
+	channelmap = new HashMap<>();
     }
 
     @Override

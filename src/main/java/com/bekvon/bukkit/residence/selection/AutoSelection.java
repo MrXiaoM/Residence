@@ -15,7 +15,7 @@ import com.bekvon.bukkit.residence.protection.CuboidArea;
 
 public class AutoSelection {
 
-    private HashMap<UUID, AutoSelector> list = new HashMap<UUID, AutoSelector>();
+    private HashMap<UUID, AutoSelector> list = new HashMap<>();
     private Residence plugin;
 
     public AutoSelection(Residence residence) {

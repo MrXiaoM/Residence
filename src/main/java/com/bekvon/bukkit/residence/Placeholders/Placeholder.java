@@ -35,8 +35,8 @@ public class Placeholder {
 
     private static ChatFilterRule numericalRule = new ChatFilterRule().setPattern("(\\$)(\\d)");
 
-    static LinkedHashMap<String, CMIPlaceHolders> byNameStatic = new LinkedHashMap<String, CMIPlaceHolders>();
-    static LinkedHashMap<String, LinkedHashSet<CMIPlaceHolders>> byNameComplex = new LinkedHashMap<String, LinkedHashSet<CMIPlaceHolders>>();
+    static LinkedHashMap<String, CMIPlaceHolders> byNameStatic = new LinkedHashMap<>();
+    static LinkedHashMap<String, LinkedHashSet<CMIPlaceHolders>> byNameComplex = new LinkedHashMap<>();
 
     public enum CMIPlaceHolders {
         residence_user_amount,
@@ -77,7 +77,7 @@ public class Placeholder {
                 }
                 String[] split = fullName.split("_");
                 String first = split[0] + "_" + split[1];
-                LinkedHashSet<CMIPlaceHolders> old = byNameComplex.getOrDefault(first, new LinkedHashSet<CMIPlaceHolders>());
+                LinkedHashSet<CMIPlaceHolders> old = byNameComplex.getOrDefault(first, new LinkedHashSet<>());
                 old.add(one);
                 byNameComplex.put(first, old);
             }
@@ -205,7 +205,7 @@ public class Placeholder {
         }
 
         public List<String> getComplexRegexMatchers(String text) {
-            List<String> lsInLs = new ArrayList<String>();
+            List<String> lsInLs = new ArrayList<>();
             if (!this.isComplex())
                 return lsInLs;
 
@@ -223,7 +223,7 @@ public class Placeholder {
 
         public List<String> getComplexValues(String text) {
 
-            List<String> lsInLs = new ArrayList<String>();
+            List<String> lsInLs = new ArrayList<>();
             if (!this.isComplex() || text == null)
                 return lsInLs;
 
@@ -303,7 +303,7 @@ public class Placeholder {
     }
 
     public List<String> updatePlaceHolders(Player player, List<String> messages) {
-        List<String> ms = new ArrayList<String>(messages);
+        List<String> ms = new ArrayList<>(messages);
         for (int i = 0, l = messages.size(); i < l; ++i) {
             ms.set(i, updatePlaceHolders(player, messages.get(i)));
         }

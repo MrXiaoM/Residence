@@ -51,7 +51,7 @@ public class ZipLibrary {
 	File fileZip = new File(BackupDir, dateFormat.format(date) + ".zip");
 
 	// Create the Source List, and add directories/etc to the file.
-	List<File> sources = new ArrayList<File>();
+	List<File> sources = new ArrayList<>();
 
 	File saveFolder = new File(plugin.getDataLocation(), "Save");
 	File worldFolder = new File(saveFolder, "Worlds");

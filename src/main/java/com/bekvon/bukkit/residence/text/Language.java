@@ -2,10 +2,7 @@ package com.bekvon.bukkit.residence.text;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -186,7 +183,7 @@ public class Language {
     }
 
     private static List<String> ColorsArray(List<String> text) {
-	List<String> temp = new ArrayList<String>();
+	List<String> temp = new ArrayList<>();
 	for (String part : text) {
 	    temp.add(Colors(part));
 	}

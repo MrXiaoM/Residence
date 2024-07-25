@@ -32,7 +32,7 @@ public class info implements cmd {
             Player player = (Player) sender;
             ClaimedResidence res = plugin.getResidenceManager().getByLoc(player.getLocation());
 
-            Set<ClaimedResidence> nearby = new HashSet<ClaimedResidence>();
+            Set<ClaimedResidence> nearby = new HashSet<>();
 
             Location loc = player.getLocation();
             for (int x = -9; x <= 9; x = x + 3) {

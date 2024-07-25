@@ -48,7 +48,7 @@ public class v1_8Events implements Listener {
 	if (event.isCancelled())
 	    return;
 	FlagPermissions world = Residence.getInstance().getWorldFlags().getPerms(loc.getWorld().getName());
-	List<Block> preserve = new ArrayList<Block>();
+	List<Block> preserve = new ArrayList<>();
 	for (Block block : event.blockList()) {
 	    FlagPermissions blockperms = Residence.getInstance().getPermsByLoc(block.getLocation());
 	    if (!blockperms.has(Flags.explode, world.has(Flags.explode, true))) {

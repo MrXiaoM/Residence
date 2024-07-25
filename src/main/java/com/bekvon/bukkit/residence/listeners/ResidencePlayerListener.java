@@ -108,12 +108,12 @@ public class ResidencePlayerListener implements Listener {
     protected Map<UUID, StuckInfo> stuckTeleportCounter;
     protected int minUpdateTime;
     protected boolean chatenabled;
-    protected Set<UUID> playerToggleChat = new HashSet<UUID>();
+    protected Set<UUID> playerToggleChat = new HashSet<>();
 
     private Residence plugin;
 
-    protected Map<UUID, Long> lastCheck = new HashMap<UUID, Long>();
-    protected Map<UUID, Vector> lastLocation = new HashMap<UUID, Vector>();
+    protected Map<UUID, Long> lastCheck = new HashMap<>();
+    protected Map<UUID, Vector> lastLocation = new HashMap<>();
 
     private Runnable locationChangeCheck = () -> {
         for (Player player : Bukkit.getOnlinePlayers()) {
@@ -131,10 +131,10 @@ public class ResidencePlayerListener implements Listener {
     };
 
     public ResidencePlayerListener(Residence plugin) {
-        currentRes = new HashMap<UUID, ClaimedResidence>();
-        lastUpdate = new HashMap<UUID, Long>();
-        lastOutsideLoc = new HashMap<UUID, Location>();
-        stuckTeleportCounter = new HashMap<UUID, StuckInfo>();
+        currentRes = new HashMap<>();
+        lastUpdate = new HashMap<>();
+        lastOutsideLoc = new HashMap<>();
+        stuckTeleportCounter = new HashMap<>();
         playerToggleChat.clear();
         minUpdateTime = plugin.getConfigManager().getMinMoveUpdateInterval();
         chatenabled = plugin.getConfigManager().chatEnabled();
@@ -147,10 +147,10 @@ public class ResidencePlayerListener implements Listener {
     }
 
     public void reload() {
-        currentRes = new HashMap<UUID, ClaimedResidence>();
-        lastUpdate = new HashMap<UUID, Long>();
-        lastOutsideLoc = new HashMap<UUID, Location>();
-        stuckTeleportCounter = new HashMap<UUID, StuckInfo>();
+        currentRes = new HashMap<>();
+        lastUpdate = new HashMap<>();
+        lastOutsideLoc = new HashMap<>();
+        stuckTeleportCounter = new HashMap<>();
         playerToggleChat.clear();
         minUpdateTime = plugin.getConfigManager().getMinMoveUpdateInterval();
         chatenabled = plugin.getConfigManager().chatEnabled();
@@ -2612,7 +2612,7 @@ public class ResidencePlayerListener implements Listener {
         return true;
     }
 
-    HashMap<UUID, Long> informar = new HashMap<UUID, Long>();
+    HashMap<UUID, Long> informar = new HashMap<>();
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onResidenceChangeMessagePrint(ResidenceChangedEvent event) {
@@ -2793,7 +2793,7 @@ public class ResidencePlayerListener implements Listener {
 
         try {
 
-            Set<ClaimedResidence> residences = new HashSet<ClaimedResidence>();
+            Set<ClaimedResidence> residences = new HashSet<>();
 
             for (Player player : Bukkit.getServer().getOnlinePlayers()) {
                 ClaimedResidence res = getCurrentResidence(player.getUniqueId());
@@ -2812,7 +2812,7 @@ public class ResidencePlayerListener implements Listener {
             }
 
             for (ClaimedResidence res : residences) {
-                Set<Entity> entities = new HashSet<Entity>();
+                Set<Entity> entities = new HashSet<>();
 
                 World world = Bukkit.getWorld(res.getWorld());
 

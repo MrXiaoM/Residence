@@ -92,10 +92,10 @@ public class ClaimedResidence {
 
     private long leaseExpireTime = 0;
 
-    protected List<String> cmdWhiteList = new ArrayList<String>();
-    protected List<String> cmdBlackList = new ArrayList<String>();
+    protected List<String> cmdWhiteList = new ArrayList<>();
+    protected List<String> cmdBlackList = new ArrayList<>();
 
-    List<ShopVote> ShopVoteList = new ArrayList<ShopVote>();
+    List<ShopVote> ShopVoteList = new ArrayList<>();
 
     protected RentableLand rentableland = null;
     protected RentedLand rentedland = null;
@@ -104,7 +104,7 @@ public class ClaimedResidence {
 
     private ResidenceRaid raid;
 
-    private Set<Signs> signsInResidence = Collections.synchronizedSet(new HashSet<Signs>());
+    private Set<Signs> signsInResidence = Collections.synchronizedSet(new HashSet<>());
 
     public String getResidenceName() {
         return resName;
@@ -856,7 +856,7 @@ public class ClaimedResidence {
         if (!subzonename.contains(".")) {
             return subzones.get(subzonename);
         }
-        String split[] = subzonename.split("\\.");
+        String[] split = subzonename.split("\\.");
         ClaimedResidence get = subzones.get(split[0]);
         for (int i = 1; i < split.length; i++) {
             if (get == null) {
@@ -1127,7 +1127,7 @@ public class ClaimedResidence {
             return bw != null ? bw.getSpawnLocation() != null ? bw.getSpawnLocation() : player.getWorld().getSpawnLocation() : player.getWorld().getSpawnLocation();
         }
 
-        List<RandomLoc> randomLocList = new ArrayList<RandomLoc>();
+        List<RandomLoc> randomLocList = new ArrayList<>();
 
         for (int z = -1; z < area.getZSize() + 2; z++) {
             randomLocList.add(new RandomLoc(area.getLowVector().getX(), 0, area.getLowVector().getZ() + z));
@@ -1242,7 +1242,7 @@ public class ClaimedResidence {
     }
 
     public String[] listSubzones() {
-        String list[] = new String[subzones.size()];
+        String[] list = new String[subzones.size()];
         int i = 0;
         for (String res : subzones.keySet()) {
             list[i] = res;
@@ -1252,7 +1252,7 @@ public class ClaimedResidence {
     }
 
     public List<ClaimedResidence> getSubzones() {
-        List<ClaimedResidence> list = new ArrayList<ClaimedResidence>();
+        List<ClaimedResidence> list = new ArrayList<>();
         for (Entry<String, ClaimedResidence> res : subzones.entrySet()) {
             list.add(res.getValue());
         }
@@ -1324,7 +1324,7 @@ public class ClaimedResidence {
     }
 
     public String[] getAreaList() {
-        String arealist[] = new String[areas.size()];
+        String[] arealist = new String[areas.size()];
         int i = 0;
         for (Entry<String, CuboidArea> entry : areas.entrySet()) {
             arealist[i] = entry.getKey();
@@ -1784,7 +1784,7 @@ public class ClaimedResidence {
                             + convertDouble(tpLoc.getZ()) + ":" + convertDouble(PitchYaw == null ? 0 : PitchYaw.getX()) + ":"
                             + convertDouble(PitchYaw == null ? 0 : PitchYaw.getY()));
                 } else {
-                    Map<String, Object> tpmap = new HashMap<String, Object>();
+                    Map<String, Object> tpmap = new HashMap<>();
                     tpmap.put("X", convertDouble(this.tpLoc.getX()));
                     tpmap.put("Y", convertDouble(this.tpLoc.getY()));
                     tpmap.put("Z", convertDouble(this.tpLoc.getZ()));

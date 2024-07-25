@@ -19,7 +19,7 @@ public class PermissionListManager {
 
     public PermissionListManager(Residence residence) {
 	this.plugin = residence;
-	lists = Collections.synchronizedMap(new HashMap<String, Map<String, FlagPermissions>>());
+	lists = Collections.synchronizedMap(new HashMap<>());
     }
 
     public FlagPermissions getList(String player, String listname) {
@@ -108,7 +108,7 @@ public class PermissionListManager {
 	    for (Entry<String, Object> players : root.entrySet()) {
 		try {
 		    Map<String, Object> value = (Map<String, Object>) players.getValue();
-		    Map<String, FlagPermissions> loadedMap = Collections.synchronizedMap(new HashMap<String, FlagPermissions>());
+		    Map<String, FlagPermissions> loadedMap = Collections.synchronizedMap(new HashMap<>());
 		    for (Entry<String, Object> list : value.entrySet()) {
 			loadedMap.put(list.getKey(), FlagPermissions.load((Map<String, Object>) list.getValue()));
 		    }

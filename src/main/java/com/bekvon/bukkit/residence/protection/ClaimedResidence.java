@@ -16,6 +16,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
+import com.bekvon.bukkit.residence.event.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -40,12 +41,7 @@ import com.bekvon.bukkit.residence.containers.lm;
 import com.bekvon.bukkit.residence.economy.ResidenceBank;
 import com.bekvon.bukkit.residence.economy.rent.RentableLand;
 import com.bekvon.bukkit.residence.economy.rent.RentedLand;
-import com.bekvon.bukkit.residence.event.ResidenceAreaAddEvent;
-import com.bekvon.bukkit.residence.event.ResidenceAreaDeleteEvent;
 import com.bekvon.bukkit.residence.event.ResidenceDeleteEvent.DeleteCause;
-import com.bekvon.bukkit.residence.event.ResidenceSizeChangeEvent;
-import com.bekvon.bukkit.residence.event.ResidenceSubzoneCreationEvent;
-import com.bekvon.bukkit.residence.event.ResidenceTPEvent;
 import com.bekvon.bukkit.residence.itemlist.ItemList.ListType;
 import com.bekvon.bukkit.residence.itemlist.ResidenceItemList;
 import com.bekvon.bukkit.residence.permissions.PermissionGroup;
@@ -69,6 +65,7 @@ import net.Zrips.CMILib.RawMessages.RawMessage;
 import net.Zrips.CMILib.TitleMessages.CMITitleMessage;
 import net.Zrips.CMILib.Version.Version;
 import net.Zrips.CMILib.Version.Schedulers.CMIScheduler;
+import top.mrxiaom.residence.listeners.ClaimedResidence$Patch;
 
 public class ClaimedResidence {
 
@@ -1805,6 +1802,13 @@ public class ClaimedResidence {
             lm.Subzone_Exists.sendMessage(sender, newName);
             return false;
         }
+
+        // NeoWorld start - 添加监听子领地重命名事件
+        if (!ClaimedResidence$Patch.onSubzoneRename(res, newName, oldName)) {
+            return false;
+        }
+        // NeoWorld end - 添加监听子领地重命名事件
+
         res.setName(newN);
         subzones.put(newName, res);
         subzones.remove(oldName);

@@ -313,10 +313,30 @@ public class ResidenceCommandListener implements CommandExecutor {
         return Arrays.copyOfRange(args, 1, args.length);
     }
 
+    // NeoWorld start - 允许注入自定义命令
+    public static void setupExt(ClassLoader classLoader, String extPackage) {
+        ResidenceCommandListener.EXT_COMMANDS_PACKAGE = extPackage;
+        ResidenceCommandListener.classLoader = classLoader;
+    }
+    private static String EXT_COMMANDS_PACKAGE = null;
+    private static ClassLoader classLoader = null;
+    // NeoWorld end - 允许注入自定义命令
+
     private static cmd getCmdClass(String[] args) {
         cmd cmdClass = null;
         try {
             Class<?> nmsClass;
+
+            // NeoWorld start - 允许注入自定义命令
+            if (EXT_COMMANDS_PACKAGE != null) try {
+                // 优先寻找 hacked 命令类
+                String className = EXT_COMMANDS_PACKAGE + "." + args[0].toLowerCase();
+                if (classLoader != null) nmsClass = classLoader.loadClass(className);
+                else nmsClass = Class.forName(className);
+            } catch (Throwable ignored) {
+            }
+            // NeoWorld end - 允许注入自定义命令
+
             nmsClass = Class.forName("com.bekvon.bukkit.residence.commands." + args[0].toLowerCase());
             if (cmd.class.isAssignableFrom(nmsClass)) {
                 cmdClass = (cmd) nmsClass.getConstructor().newInstance();

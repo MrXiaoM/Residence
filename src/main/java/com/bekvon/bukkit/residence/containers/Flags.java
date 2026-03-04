@@ -133,7 +133,18 @@ public enum Flags {
     witherdestruction(CMIMaterial.WITHER_SKELETON_SKULL, FlagMode.Residence, "Allows or denys wither block damage", true),
     waterflow(CMIMaterial.WATER_BUCKET, FlagMode.Residence, "Allows or denys water flow, overrides flow", true),
     wspeed1(CMIMaterial.POTION, FlagMode.Residence, "Change players walk speed in residence to %1", true),
-    wspeed2(CMIMaterial.POTION, FlagMode.Residence, "Change players walk speed in residence to %1", true);
+    wspeed2(CMIMaterial.POTION, FlagMode.Residence, "Change players walk speed in residence to %1", true),
+
+    // NeoWorld start - 添加更多权限
+
+    back(CMIMaterial.ENDER_PEARL, FlagMode.Both, "Allows or denys /back and /dback command", true),
+    containerview(CMIMaterial.FURNACE_MINECART, FlagMode.Both, "Allows or denys shift right click with a spyglass (or directly right click if container permission deny) containers to view the content", false),
+    itemframe(CMIMaterial.FEATHER, FlagMode.Both, "Allows or denys use of item frame", false),
+    itemhighlight(CMIMaterial.GLOW_INK_SAC, FlagMode.Residence, "Mark item entity spawn in residence to glow", false),
+    quickshop(CMIMaterial.CHEST, FlagMode.Both, "Allow or deny create QuickShop in the residence", false),
+
+    ;
+    // NeoWorld end - 添加更多权限
 
     private String translated = null;
     private CMIMaterial icon;

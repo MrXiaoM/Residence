@@ -80,6 +80,7 @@ import net.Zrips.CMILib.Entities.CMIEntityType;
 import net.Zrips.CMILib.Items.CMIItemStack;
 import net.Zrips.CMILib.Items.CMIMaterial;
 import net.Zrips.CMILib.Version.Version;
+import top.mrxiaom.residence.listeners.ResidenceEntityListener$Patch;
 
 public class ResidenceEntityListener implements Listener {
 
@@ -157,6 +158,8 @@ public class ResidenceEntityListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onEntitySpawnEvent(EntitySpawnEvent event) {
+        // NeoWorld
+        ResidenceEntityListener$Patch.onEntitySpawnEvent(event);
 
         // Disabling listener if flag disabled globally
         if (!Flags.nomobs.isGlobalyEnabled())

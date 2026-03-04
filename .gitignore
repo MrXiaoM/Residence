@@ -15,3 +15,6 @@
 README
 LICENSE.txt
 /target/
+
+.idea
+*.iml

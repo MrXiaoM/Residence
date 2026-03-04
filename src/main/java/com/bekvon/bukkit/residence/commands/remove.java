@@ -46,26 +46,48 @@ public class remove implements cmd {
         if (sender instanceof Player)
             player = (Player) sender;
 
-        if (player != null &&
-                res.isSubzone() &&
-                !resadmin &&
-                plugin.getConfigManager().isPreventSubZoneRemoval() &&
-                !res.getParent().isOwner(sender) &&
-                !res.getPermissions().playerHas(player, Flags.admin, FlagCombo.OnlyTrue) &&
-                ResPerm.delete_subzone.hasPermission(sender, lm.Subzone_CantDeleteNotOwnerOfParent)) {
-            return true;
+        // NeoWorld start - 明确删除命令的处理逻辑
+
+        // 服务器管理员可绕过限制
+        if (!resadmin) {
+            // 删除子领地时
+            if (res.isSubzone()) {
+                if (!ResPerm.delete_subzone.hasPermission(sender, lm.Subzone_CantDelete)) {
+                    return true;
+                }
+
+                if (player != null) {
+                    // 如果开启了“不允许非父领地主人删除”
+                    if (plugin.getConfigManager().isPreventSubZoneRemoval()) {
+                        // 在不是父领地主人时不允许删除
+                        if (!res.getParent().isOwner(sender)) {
+                            Residence.msg(player, lm.Subzone_CantDeleteNotOwnerOfParent);
+                            return true;
+                        }
+                    } else {
+                        // 在非父领地主人、非子领地主人、没有 admin 权限时不允许删除
+                        if (!res.getParent().isOwner(sender)
+                                && !res.isOwner(sender)
+                                && !res.getPermissions().playerHas(player, Flags.admin, FlagCombo.OnlyTrue)) {
+                            Residence.msg(player, lm.Subzone_CantDelete);
+                            return true;
+                        }
+                    }
+                }
+            }
+        } else {
+            // 没有总权限不允许删除
+            if (!ResPerm.delete.hasPermission(sender, lm.Residence_CantDeleteResidence)) {
+                return true;
+            }
+            // 不是领地主人不允许删除
+            if (!res.isOwner(sender)) {
+                Residence.msg(player, lm.Residence_CantDeleteResidence);
+                return true;
+            }
         }
 
-        if (!res.isSubzone() &&
-                !resadmin &&
-                !res.isOwner(sender) &&
-                !ResPerm.admin.hasPermission(sender, lm.Residence_CantDeleteResidence)) {
-            return true;
-        }
-
-        if (!res.isSubzone() && !resadmin && !ResPerm.delete.hasPermission(sender, lm.Residence_CantDeleteResidence)) {
-            return true;
-        }
+        // NeoWorld end - 明确删除命令的处理逻辑
 
         if (res.getRaid().isRaidInitialized() && !resadmin) {
             lm.Raid_noRemoval.sendMessage(sender);

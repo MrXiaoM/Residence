@@ -1394,6 +1394,44 @@ public class Residence extends JavaPlugin {
         return CMIChatColor.GREEN + "[" + CMIChatColor.GOLD + "Residence" + CMIChatColor.GREEN + "]" + CMIChatColor.GRAY;
     }
 
+    public String msg(String path) {
+        return getLM().getMessage(path);
+    }
+
+    public static void msg(CommandSender sender, String text) {
+        if (sender != null && !text.isEmpty())
+            sender.sendMessage(CMIChatColor.translate(text));
+    }
+
+    public static void msg(Player player, String text) {
+        if (player != null && !text.isEmpty())
+            player.sendMessage(CMIChatColor.translate(text));
+    }
+
+    public static void msg(CommandSender sender, lm lm, Object... variables) {
+
+        if (sender == null)
+            return;
+
+        if (getInstance().getLM().containsKey(lm.getPath())) {
+            String msg = getInstance().getLM().getMessage(lm, variables);
+            if (!msg.isEmpty())
+                sender.sendMessage(msg);
+        } else {
+            String msg = lm.getPath();
+            if (!msg.isEmpty())
+                sender.sendMessage(lm.getPath());
+        }
+    }
+
+    public List<String> msgL(lm lm) {
+        return getLM().getMessageList(lm);
+    }
+
+    public String msg(lm lm, Object... variables) {
+        return getLM().getMessage(lm, variables);
+    }
+
     public int getWorldGuardVersion() {
         return wepVersion;
     }

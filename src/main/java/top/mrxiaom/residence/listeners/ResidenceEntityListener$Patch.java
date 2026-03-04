@@ -8,6 +8,10 @@ import org.bukkit.event.entity.EntitySpawnEvent;
 
 public class ResidenceEntityListener$Patch {
 
+    /**
+     * 在方法最前面插入代码
+     * @see com.bekvon.bukkit.residence.listeners.ResidenceEntityListener#onEntitySpawnEvent(EntitySpawnEvent)
+     */
     public static void onEntitySpawnEvent(EntitySpawnEvent event) {
         Entity entity = event.getEntity();
         if (Flags.itemhighlight.isGlobalyEnabled()) {
@@ -19,4 +23,5 @@ public class ResidenceEntityListener$Patch {
             }
         }
     }
+
 }

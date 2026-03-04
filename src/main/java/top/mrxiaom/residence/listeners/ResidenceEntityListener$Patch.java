@@ -12,7 +12,7 @@ public class ResidenceEntityListener$Patch {
         Entity entity = event.getEntity();
         if (Flags.itemhighlight.isGlobalyEnabled()) {
             if (entity instanceof Item) {
-                FlagPermissions perms = plugin.getPermsByLoc(entity.getLocation());
+                FlagPermissions perms = FlagPermissions.getPerms(entity.getLocation());
                 if (perms.has(Flags.itemhighlight, FlagPermissions.FlagCombo.OnlyTrue)) {
                     entity.setGlowing(true);
                 }

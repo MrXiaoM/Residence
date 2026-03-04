@@ -1155,7 +1155,7 @@ public class ResidenceEntityListener implements Listener {
         if (plugin.isDisabledWorldListener(block.getWorld()))
             return;
 
-        if (plugin.getPermsByLoc(block.getLocation()).has(Flags.destroy, true))
+        if (FlagPermissions.getPerms(block.getLocation()).has(Flags.destroy, true))
             return;
 
         event.setCancelled(true);
@@ -1177,7 +1177,7 @@ public class ResidenceEntityListener implements Listener {
         if (ent.getType() != EntityType.WITHER)
             return;
 
-        if (!plugin.getPermsByLoc(event.getBlock().getLocation()).has(Flags.witherdestruction, FlagCombo.OnlyFalse))
+        if (!FlagPermissions.getPerms(event.getBlock().getLocation()).has(Flags.witherdestruction, FlagCombo.OnlyFalse))
             return;
 
         event.setCancelled(true);
